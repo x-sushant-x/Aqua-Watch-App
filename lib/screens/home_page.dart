@@ -1,6 +1,5 @@
 import 'package:aqua_watch_app/utils/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class PostCard extends StatefulWidget {
   final String avatarImageUrl;
@@ -57,8 +56,8 @@ class _PostCardState extends State<PostCard> {
                     child: CircleAvatar(
                       backgroundColor: AppColors.grey,
                       radius: screenSize.width * 0.04,
-                      child: SvgPicture.asset(
-                        'assets/logo.svg',
+                      child: Image.asset(
+                        'assets/app icon.png',
                         width: screenSize.width * 0.08,
                         height: screenSize.width * 0.08,
                       ),
@@ -149,12 +148,7 @@ class _PostCardState extends State<PostCard> {
                       ),
                     ),
                     Spacer(),
-                    SvgPicture.asset(
-                      'assets/Navigation.svg',
-                      width: 24,
-                      height: 24,
-                      color: AppColors.grey,
-                    ),
+                    Image.asset('assets/Navigation.png'),
                   ],
                 ),
               ],
@@ -179,175 +173,194 @@ class _HomePageState extends State<HomePage> {
   void _showUploadModal(BuildContext context) {
     showModalBottomSheet(
       context: context,
+      isScrollControlled: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20.0),
+          topRight: Radius.circular(20.0),
+        ),
+      ),
       builder: (BuildContext context) {
-        return SingleChildScrollView(
-          child: Container(
-            padding: EdgeInsets.all(16.0),
-            height: 1000.0, // Increase the height as needed
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Container(
+        return Container(
+          padding: EdgeInsets.all(16.0),
+          height: MediaQuery.of(context).size.height * 0.75,
+          child: Wrap(
+            spacing: 10.0, // Reduce the horizontal spacing
+            runSpacing: 10.0, // Reduce the vertical spacing
+            children: [
+              GestureDetector(
+                onTap: () {
+                  // Handle tap to upload action
+                },
+                child: Container(
+                  height: 222.0,
+                  width: 319.0,
+                  margin: EdgeInsets.only(left: 5.0), // Reduce space here
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: GestureDetector(
-                    onTap: () {
-                      // Handle tap to upload action
-                    },
-                    child: Container(
-                      height: 200.0,
-                      decoration: BoxDecoration(
-                        color: Colors.grey,
-                        borderRadius: BorderRadius.circular(10.0),
+                      color: AppColors.white2,
+                      borderRadius: BorderRadius.circular(10.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.black.withOpacity(0.5),
+                          spreadRadius: 0.1,
+                          blurRadius: 1,
+                          offset: Offset(0, 0),
+                        ),
+                      ]),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/Upload File.png',
+                        height: 50.0, // Adjust the height as needed
                       ),
-                      child: Center(
+                      SizedBox(
+                          height: 16.0), // Add spacing between image and text
+                      Center(
                         child: Text(
                           'Tap to Upload',
                           style: TextStyle(
                             fontSize: 24.0,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 16.0),
-                Container(
-                  decoration: BoxDecoration(
-                      // Add border
-
-                      ),
-                  padding: EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.0),
-                            border:
-                                Border.all(color: AppColors.black, width: 1.0)),
-                        width: 200,
-                        height: 40,
-                        child: Text(
-                          ' Describe Issue',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 16.0),
-                      Text(
-                        'Issue Type',
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(height: 8.0),
-                      Row(
-                        children: [
-                          Container(
-                            width: 90.0,
-                            height: 40.0,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: Colors.black,
-                                  width: 1.0), // Add border
-                              color: Colors.white,
-                            ),
-                            child: Center(
-                              child: Text('Type 1'),
-                            ),
-                          ),
-                          SizedBox(width: 8.0),
-                          Container(
-                            width: 90.0,
-                            height: 40.0,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: Colors.black,
-                                  width: 1.0), // Add border
-                              color: Colors.white,
-                            ),
-                            child: Center(
-                              child: Text('Type 2'),
-                            ),
-                          ),
-                          SizedBox(width: 8.0),
-                          Container(
-                            width: 90.0,
-                            height: 40.0,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: Colors.black,
-                                  width: 1.0), // Add border
-                              color: Colors.white,
-                            ),
-                            child: Center(
-                              child: Text('Type 3'),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 8.0),
-                      Row(
-                        children: [
-                          Container(
-                            width: 90.0,
-                            height: 40.0,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: Colors.black,
-                                  width: 1.0), // Add border
-                              color: Colors.white,
-                            ),
-                            child: Center(
-                              child: Text('Type 4'),
-                            ),
-                          ),
-                          SizedBox(width: 8.0),
-                          Container(
-                            width: 90.0,
-                            height: 40.0,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: Colors.black,
-                                  width: 1.0), // Add border
-                              color: Colors.white,
-                            ),
-                            child: Center(
-                              child: Text('Type 5'),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 16.0),
-                      ElevatedButton(
-                        onPressed: () {
-                          // Handle the upload action
-                        },
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.black,
-                        ),
-                        child: Text(
-                          'Upload',
-                          style: TextStyle(
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                            fontWeight: FontWeight.normal,
+                            color: AppColors.grey,
                           ),
                         ),
                       ),
                     ],
                   ),
                 ),
-              ],
-            ),
+              ),
+              Container(
+                padding: EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(
+                            10.0), // Set circular radius to 10
+                        border: Border.all(color: AppColors.grey, width: 1.0),
+                      ),
+                      width: 319,
+                      height: 40, // Increase the height as needed
+                      child: TextField(
+                        decoration: InputDecoration(
+                          hintText: '   Describe Issue',
+                          hintStyle: TextStyle(fontSize: 20.0),
+                          border: InputBorder.none, // Remove the border line
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 20.0),
+                    Text(
+                      'Issue Type',
+                      style: TextStyle(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
+                    SizedBox(height: 20.0),
+                    Row(
+                      children: [
+                        Container(
+                          width: 90.0,
+                          height: 34.0,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                                5.0), // Set circular radius to 5
+                            border: Border.all(color: Colors.black, width: 1.0),
+                            color: Colors.white,
+                          ),
+                          child: Center(
+                            child: Text('Flood'),
+                          ),
+                        ),
+                        SizedBox(width: 10.0), // Reduce spacing
+                        Container(
+                          width: 90.0,
+                          height: 34.0,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                                5.0), // Set circular radius to 5
+                            border: Border.all(color: Colors.black, width: 1.0),
+                            color: Colors.white,
+                          ),
+                          child: Center(
+                            child: Text('Clean Water'),
+                          ),
+                        ),
+                        SizedBox(width: 10.0), // Reduce spacing
+                        Container(
+                          width: 90.0,
+                          height: 34.0,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                                5.0), // Set circular radius to 5
+                            border: Border.all(color: Colors.black, width: 1.0),
+                            color: Colors.white,
+                          ),
+                          child: Center(
+                            child: Text('Drainage'),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8.0),
+                    Row(
+                      children: [
+                        Container(
+                          width: 90.0,
+                          height: 34.0,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                                5.0), // Set circular radius to 5
+                            border: Border.all(color: Colors.black, width: 1.0),
+                            color: Colors.white,
+                          ),
+                          child: Center(
+                            child: Text('Ponds'),
+                          ),
+                        ),
+                        SizedBox(width: 10.0), // Reduce spacing
+                        Container(
+                          width: 90.0,
+                          height: 34.0,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                                5.0), // Set circular radius to 5
+                            border: Border.all(color: Colors.black, width: 1.0),
+                            color: Colors.white,
+                          ),
+                          child: Center(
+                            child: Text('Others'),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 16.0),
+                    ElevatedButton(
+                      onPressed: () {
+                        // Handle the upload action
+                      },
+                      style: ElevatedButton.styleFrom(
+                          primary: Colors.black,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                                5.0), // Set circular radius to 5
+                          ),
+                          minimumSize: Size(85, 34)),
+                      child: Text(
+                        'Upload',
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         );
       },

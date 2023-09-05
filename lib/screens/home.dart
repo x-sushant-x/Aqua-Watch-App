@@ -4,7 +4,6 @@ import 'package:aqua_watch_app/screens/home_page.dart';
 import 'package:aqua_watch_app/screens/map.dart';
 import 'package:aqua_watch_app/screens/profile.dart';
 import 'package:aqua_watch_app/utils/colors.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -50,27 +49,24 @@ class _MyHomePageState extends State<MyHomePage> {
             },
           ),
         ],
-        title: Align(
-          alignment: Alignment.center,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SvgPicture.asset(
-                'assets/logo.svg',
-                height: screenSize.width * 0.1,
-                width: screenSize.width * 0.1,
+        titleSpacing: 50.0,
+        title: Row(
+          children: [
+            Image.asset(
+              'assets/app icon.png',
+              height: screenSize.width * 0.1,
+              width: screenSize.width * 0.1,
+            ),
+            SizedBox(width: 1.0),
+            Text(
+              'Aqua Watch',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: screenSize.width * 0.06,
+                fontWeight: FontWeight.bold,
               ),
-              SizedBox(width: 1.0),
-              Text(
-                'Aqua Watch',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: screenSize.width * 0.06,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
         centerTitle: true,
       ),
@@ -84,8 +80,8 @@ class _MyHomePageState extends State<MyHomePage> {
               onTap: () {
                 _onItemTapped(0);
               },
-              child: SvgPicture.asset(
-                'assets/Home.svg', // Replace with your SVG image
+              child: Image.asset(
+                'assets/Home.png', // Replace with your SVG image
                 width: 24,
                 height: 24,
                 color: _selectedIndex == 0 ? AppColors.black : AppColors.grey,
@@ -98,8 +94,8 @@ class _MyHomePageState extends State<MyHomePage> {
               onTap: () {
                 _onItemTapped(1);
               },
-              child: SvgPicture.asset(
-                'assets/Map Marker.svg', // Replace with your SVG image
+              child: Image.asset(
+                'assets/Map Marker.png', // Replace with your SVG image
                 width: 24,
                 height: 24,
                 color: _selectedIndex == 1 ? AppColors.black : AppColors.grey,
@@ -112,8 +108,8 @@ class _MyHomePageState extends State<MyHomePage> {
               onTap: () {
                 _onItemTapped(2);
               },
-              child: SvgPicture.asset(
-                'assets/Siren.svg', // Replace with your SVG image
+              child: Image.asset(
+                'assets/Siren.png', // Replace with your SVG image
                 width: 24,
                 height: 24,
                 color: _selectedIndex == 2 ? AppColors.black : AppColors.grey,
@@ -126,8 +122,8 @@ class _MyHomePageState extends State<MyHomePage> {
               onTap: () {
                 _onItemTapped(3);
               },
-              child: SvgPicture.asset(
-                'assets/Person.svg', // Replace with your SVG image
+              child: Image.asset(
+                'assets/Person.png', // Replace with your SVG image
                 width: 24,
                 height: 24,
                 color: _selectedIndex == 3 ? AppColors.black : AppColors.grey,
