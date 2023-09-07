@@ -36,26 +36,29 @@ Widget bottomSheetBuilder(BuildContext context) {
               ),
             ),
           ),
-          Row(
-            children: [
-              CustomOutlinedButton(
-                deviceSize: deviceSize,
-                title: "Municipal",
-                onTap: () {},
-              ),
-              CustomOutlinedButton(
-                deviceSize: deviceSize,
-                title: "NGOs",
-                onTap: () {},
-              ),
-              CustomOutlinedButton(
-                deviceSize: deviceSize,
-                title: "Citizen",
-                onTap: () {
-                  Get.to(sign_up());
-                },
-              ),
-            ],
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: deviceSize.width / 46),
+            child: Row(
+              children: [
+                CustomOutlinedButton(
+                  deviceSize: deviceSize,
+                  title: "Municipal",
+                  onTap: () {},
+                ),
+                CustomOutlinedButton(
+                  deviceSize: deviceSize,
+                  title: "NGOs",
+                  onTap: () {},
+                ),
+                CustomOutlinedButton(
+                  deviceSize: deviceSize,
+                  title: "Citizen",
+                  onTap: () {
+                    Get.to(sign_up());
+                  },
+                ),
+              ],
+            ),
           ),
           SizedBox(height: deviceSize.height / 100),
         ],
