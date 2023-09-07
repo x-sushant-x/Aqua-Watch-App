@@ -1,5 +1,7 @@
 import 'package:aqua_watch_app/utils/buttons.dart';
+import 'package:aqua_watch_app/view/authentication/sign_up.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 Widget bottomSheetBuilder(BuildContext context) {
@@ -36,9 +38,23 @@ Widget bottomSheetBuilder(BuildContext context) {
           ),
           Row(
             children: [
-              CustomOutlinedButton(deviceSize: deviceSize, title: "Municipal"),
-              CustomOutlinedButton(deviceSize: deviceSize, title: "NGOs"),
-              CustomOutlinedButton(deviceSize: deviceSize, title: "Citizen"),
+              CustomOutlinedButton(
+                deviceSize: deviceSize,
+                title: "Municipal",
+                onTap: () {},
+              ),
+              CustomOutlinedButton(
+                deviceSize: deviceSize,
+                title: "NGOs",
+                onTap: () {},
+              ),
+              CustomOutlinedButton(
+                deviceSize: deviceSize,
+                title: "Citizen",
+                onTap: () {
+                  Get.to(sign_up());
+                },
+              ),
             ],
           ),
           SizedBox(height: deviceSize.height / 100),

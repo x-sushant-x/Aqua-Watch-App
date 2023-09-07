@@ -5,11 +5,13 @@ class CustomOutlinedButton extends StatelessWidget {
   CustomOutlinedButton({
     super.key,
     required this.deviceSize,
-    required this.title
+    required this.title,
+    required this.onTap
   });
 
   final Size deviceSize;
   String title;
+  void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,7 @@ class CustomOutlinedButton extends StatelessWidget {
             left: deviceSize.width / 23,
             right: deviceSize.width / 46),
         child: TextButton(
-          onPressed: () {},
+          onPressed: onTap,
           style: TextButton.styleFrom(
               foregroundColor: Color(0xFF252525),
               textStyle: GoogleFonts.lexend(
