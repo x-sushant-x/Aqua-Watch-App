@@ -1,4 +1,4 @@
-import 'package:aqua_watch_app/splash.dart';
+import 'package:aqua_watch_app/view/onboarding/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
