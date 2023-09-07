@@ -32,7 +32,7 @@ class MapPage extends StatelessWidget {
                           onPressed: () {},
                           icon: Icon(
                             Icons.search,
-                            size: MediaQuery.of(context).size.height / 28,
+                            size: MediaQuery.of(context).size.height / 34,
                           ),
                         )),
                     Expanded(
@@ -49,7 +49,7 @@ class MapPage extends StatelessWidget {
                                 style: GoogleFonts.lexend(
                                     fontSize: MediaQuery.of(context)
                                             .devicePixelRatio *
-                                        12,
+                                        7,
                                     color: Color(0xFF898989)),
                               ),
                             ))),
@@ -62,7 +62,7 @@ class MapPage extends StatelessWidget {
                           onPressed: () {},
                           icon: Icon(
                             Icons.mic,
-                            size: MediaQuery.of(context).size.height / 28,
+                            size: MediaQuery.of(context).size.height / 34,
                           ),
                         ))
                   ],

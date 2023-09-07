@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 Widget bottomSheetBuilder(BuildContext context) {
   Size deviceSize = MediaQuery.of(context).size;
@@ -20,7 +19,7 @@ Widget bottomSheetBuilder(BuildContext context) {
               "Choose Your Side",
               style: GoogleFonts.lexend(
                   fontWeight: FontWeight.w500,
-                  fontSize: MediaQuery.of(context).devicePixelRatio * 18),
+                  fontSize: MediaQuery.of(context).devicePixelRatio * 10),
             ),
           ),
         ),
@@ -33,10 +32,10 @@ Widget bottomSheetBuilder(BuildContext context) {
                 child: TextButton(
                   onPressed: () {},
                   style: TextButton.styleFrom(
-                      foregroundColor: Colors.black,
+                      foregroundColor: Color(0xFF252525),
                       textStyle: GoogleFonts.lexend(
                           fontSize:
-                              MediaQuery.of(context).devicePixelRatio * 12),
+                              MediaQuery.of(context).devicePixelRatio * 7),
                       minimumSize: Size(20, 40),
                       maximumSize: Size(40, 40),
                       shape: RoundedRectangleBorder(
@@ -53,10 +52,10 @@ Widget bottomSheetBuilder(BuildContext context) {
                 child: TextButton(
                   onPressed: () {},
                   style: TextButton.styleFrom(
-                      foregroundColor: Colors.black,
+                      foregroundColor: Color(0xFF252525),
                       textStyle: GoogleFonts.lexend(
                           fontSize:
-                              MediaQuery.of(context).devicePixelRatio * 12),
+                              MediaQuery.of(context).devicePixelRatio * 7),
                       minimumSize: Size(20, 40),
                       maximumSize: Size(40, 40),
                       shape: RoundedRectangleBorder(
@@ -73,10 +72,10 @@ Widget bottomSheetBuilder(BuildContext context) {
                 child: TextButton(
                   onPressed: () {},
                   style: TextButton.styleFrom(
-                      foregroundColor: Colors.black,
+                      foregroundColor: Color(0xFF252525),
                       textStyle: GoogleFonts.lexend(
                           fontSize:
-                              MediaQuery.of(context).devicePixelRatio * 12),
+                              MediaQuery.of(context).devicePixelRatio * 7),
                       minimumSize: Size(20, 40),
                       shape: RoundedRectangleBorder(
                           side: BorderSide(width: 1.4),
@@ -114,7 +113,7 @@ class SplashPage extends StatelessWidget {
                   "Aqua Watch",
                   style: GoogleFonts.lexend(
                     fontWeight: FontWeight.w600,
-                    fontSize: MediaQuery.of(context).devicePixelRatio * 20,
+                    fontSize: MediaQuery.of(context).devicePixelRatio * 11,
                   ),
                 )
               ],
@@ -133,14 +132,14 @@ class SplashPage extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.only(
-                left: deviceSize.width / 18,
-                right: deviceSize.width / 18,
-                top: deviceSize.height / 40,
+                left: deviceSize.width / 30,
+                right: deviceSize.width / 30,
+                top: deviceSize.height / 1000,
                 bottom: deviceSize.height / 18),
             child: Text.rich(TextSpan(
                 style: GoogleFonts.lexend(
                     fontWeight: FontWeight.w600,
-                    fontSize: MediaQuery.of(context).devicePixelRatio * 25),
+                    fontSize: MediaQuery.of(context).devicePixelRatio * 14.2),
                 children: const [
                   TextSpan(text: "An app for all your "),
                   TextSpan(text: "water", style: TextStyle(color: Colors.blue)),
@@ -149,7 +148,7 @@ class SplashPage extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.only(
-                top: deviceSize.height / 60, left: deviceSize.width / 18),
+                top: deviceSize.height / 60, left: deviceSize.width / 25),
             child: Align(
                 alignment: Alignment.centerLeft,
                 child: TextButton(
@@ -164,12 +163,12 @@ class SplashPage extends StatelessWidget {
                   },
                   style: TextButton.styleFrom(
                       minimumSize:
-                          Size(deviceSize.width / 3, deviceSize.height / 16),
+                          Size(deviceSize.width / 3, deviceSize.height / 20),
                       backgroundColor: Color(0xFF252525),
                       foregroundColor: Colors.white,
                       textStyle: GoogleFonts.lexend(
                           fontSize:
-                              MediaQuery.of(context).devicePixelRatio * 12)),
+                              MediaQuery.of(context).devicePixelRatio * 7.5)),
                   child: Text(
                     "Start",
                     style: GoogleFonts.lexend(),
@@ -180,10 +179,13 @@ class SplashPage extends StatelessWidget {
             child: Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
-                padding: EdgeInsets.symmetric(vertical: deviceSize.height / 60),
+                padding: EdgeInsets.only(
+                    top: deviceSize.height / 60,
+                    bottom: deviceSize.height / 90),
                 child: Text.rich(TextSpan(
                     style: GoogleFonts.lexend(
-                        fontSize: MediaQuery.of(context).devicePixelRatio * 12),
+                        fontSize:
+                            MediaQuery.of(context).devicePixelRatio * 5.5),
                     children: const [
                       TextSpan(text: "Developed with "),
                       TextSpan(text: "❤️", style: TextStyle(color: Colors.red)),
