@@ -27,7 +27,7 @@ class sign_up extends StatelessWidget {
               Container(
                 height: h * 0.3,
                 width: w,
-                color: Colors.black,
+                color: Color.fromARGB(255, 66, 66, 66),
               ),
             ]),
             Container(
@@ -45,15 +45,14 @@ class sign_up extends StatelessWidget {
                     children: [
                       Container(
                         height: h * 0.6,
-                        width: w * 0.85,
+                        width: w * 0.90,
                         padding: EdgeInsets.all(20),
-                        decoration: const BoxDecoration(
+                        decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.all(Radius.circular(20)),
                           boxShadow: [
                             BoxShadow(
-                              blurRadius: 2.0,
-                            ),
+                                blurRadius: 1.0, color: Colors.grey.shade500),
                           ],
                         ),
                         child: Column(
@@ -200,10 +199,10 @@ class sign_up extends StatelessWidget {
                               },
                               style: ElevatedButton.styleFrom(
                                 minimumSize: Size.fromHeight(h * 0.07),
-                                backgroundColor:
-                                    Colors.black, // Background color
+                                backgroundColor: Color.fromARGB(
+                                    255, 37, 37, 37), // Background color
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20),
+                                  borderRadius: BorderRadius.circular(10),
                                 ),
                                 padding: EdgeInsets.symmetric(
                                     vertical: 10, horizontal: 16),
@@ -211,16 +210,6 @@ class sign_up extends StatelessWidget {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Container(
-                                    height: 16,
-                                    width: 16,
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                        image: AssetImage(
-                                            "assets/signup/Google.png"),
-                                      ),
-                                    ),
-                                  ),
                                   SizedBox(
                                       width: 8), // Adjust the spacing as needed
                                   Text(
@@ -255,7 +244,8 @@ class sign_up extends StatelessWidget {
                             "Already have account?",
                             style: GoogleFonts.lexend(
                                 textStyle: TextStyle(
-                                    fontSize: 18, color: Colors.black)),
+                                    fontSize: 15,
+                                    color: Color.fromARGB(255, 69, 69, 69))),
                           ),
                           TextButton(
                               onPressed: () {
@@ -265,14 +255,13 @@ class sign_up extends StatelessWidget {
                                       builder: (context) => const Login()),
                                 );
                               },
-                              child: Text(
-                                "Login",
-                                style: GoogleFonts.lexend(
-                                    textStyle: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20,
-                                        color: Colors.black)),
-                              ))
+                              child: Text("Login",
+                                  style: GoogleFonts.lexend(
+                                      textStyle: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                          color:
+                                              Color.fromARGB(255, 0, 0, 0)))))
                         ],
                       ),
                     ),
@@ -312,6 +301,10 @@ class _Checkbox1State extends State<Checkbox1> {
 
     return Checkbox(
       checkColor: Colors.blue,
+      side: MaterialStateBorderSide.resolveWith(
+        (states) => BorderSide(width: 1.0, color: Colors.grey.shade700),
+      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
       fillColor: MaterialStateProperty.resolveWith(getColor),
       value: isChecked,
       onChanged: (bool? value) {
