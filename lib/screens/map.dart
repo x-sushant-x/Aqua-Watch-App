@@ -7,30 +7,33 @@ class MapPage extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          Container(color: Colors.pink),
+          Container(color: Colors.pink), // will be replaced by actual map
           Positioned(
             top: MediaQuery.of(context).size.height / 14,
             left: MediaQuery.of(context).size.width / 6.5,
             right: MediaQuery.of(context).size.width / 6.5,
             child: SafeArea(
               child: Container(
-                width: MediaQuery.of(context).size.width / 3,
-                height: MediaQuery.of(context).size.height / 18,
+                width: MediaQuery.of(context).size.width / 2.1,
+                height: MediaQuery.of(context).size.height / 15,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: Colors.white,
-                ),
+                    borderRadius: BorderRadius.circular(6),
+                    color: Colors.white,
+                    border: Border.all(color: Color(0xFF898989), width: 1)),
                 child: Row(
                   children: [
                     Padding(
                         padding: EdgeInsets.only(
-                            top: (MediaQuery.of(context).size.height / 90),
-                            bottom: (MediaQuery.of(context).size.height / 90),
-                            left: MediaQuery.of(context).size.width / 38,
-                            right: MediaQuery.of(context).size.width / 38),
-                        child: Icon(
-                          Icons.search,
-                          size: MediaQuery.of(context).size.height / 30,
+                          top: (MediaQuery.of(context).size.height / 400),
+                          bottom: (MediaQuery.of(context).size.height / 400),
+                          left: MediaQuery.of(context).size.width / 10000,
+                        ),
+                        child: IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.search,
+                            size: MediaQuery.of(context).size.height / 28,
+                          ),
                         )),
                     Expanded(
                         child: Padding(
@@ -49,13 +52,15 @@ class MapPage extends StatelessWidget {
                             ))),
                     Padding(
                         padding: EdgeInsets.only(
-                            top: (MediaQuery.of(context).size.height / 90),
-                            bottom: (MediaQuery.of(context).size.height / 90),
-                            left: MediaQuery.of(context).size.width / 38,
-                            right: MediaQuery.of(context).size.width / 38),
-                        child: Icon(
-                          Icons.mic,
-                          size: MediaQuery.of(context).size.height / 30,
+                          top: (MediaQuery.of(context).size.height / 400),
+                          bottom: (MediaQuery.of(context).size.height / 400),
+                        ),
+                        child: IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.mic,
+                            size: MediaQuery.of(context).size.height / 28,
+                          ),
                         ))
                   ],
                 ),
