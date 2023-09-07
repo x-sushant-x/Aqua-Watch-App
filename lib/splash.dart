@@ -165,9 +165,11 @@ class SplashPage extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: deviceSize.height / 60),
                 child: Text.rich(TextSpan(
                     style: GoogleFonts.lexend(
-                        fontSize: MediaQuery.of(context).devicePixelRatio * 14),
+                        fontSize: MediaQuery.of(context).devicePixelRatio * 15),
                     children: const [
-                      TextSpan(text: "Developed with ❤️ By "),
+                      TextSpan(text: "Developed with "),
+                      TextSpan(text: "❤️", style: TextStyle(color: Colors.red)),
+                      TextSpan(text: " By "),
                       TextSpan(
                           text: "Cyber Crew",
                           style: TextStyle(fontWeight: FontWeight.bold)),
