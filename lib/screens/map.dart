@@ -42,13 +42,16 @@ class MapPage extends StatelessWidget {
                                 bottom: MediaQuery.of(context).size.height / 90,
                                 left: MediaQuery.of(context).size.width / 65,
                                 right: MediaQuery.of(context).size.width / 65),
-                            child: Text(
-                              "Search",
-                              style: GoogleFonts.lexend(
-                                  fontSize:
-                                      MediaQuery.of(context).devicePixelRatio *
-                                          12,
-                                  color: Color(0xFF898989)),
+                            child: InkWell(
+                              onTap: () {},
+                              child: Text(
+                                "Search",
+                                style: GoogleFonts.lexend(
+                                    fontSize: MediaQuery.of(context)
+                                            .devicePixelRatio *
+                                        12,
+                                    color: Color(0xFF898989)),
+                              ),
                             ))),
                     Padding(
                         padding: EdgeInsets.only(
