@@ -1,5 +1,74 @@
+import 'package:aqua_watch_app/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+// Called when a marker is clicked on map
+
+class MapScreen extends StatefulWidget {
+  const MapScreen();
+  @override
+  State<MapScreen> createState() => _MapScreenState();
+}
+
+class _MapScreenState extends State<MapScreen> {
+  LatLng initialLocation = const LatLng(30.27688088312732, 77.04792749406771);
+  BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
+
+  void onTap() {
+    // kisi bhi marker ko tap karne pe bottom sheet khulegi
+    showModalBottomSheet(
+        context: context,
+        builder: bottomSheetBuilder,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(20))));
+  }
+
+  @override
+  void initState() {
+    // ye init state or set state wala code copy kiya, ye sab custom marker daalne ke liye hain, samaj nahi aa raha
+    addCustomIcon();
+    super.initState();
+  }
+
+  void addCustomIcon() {
+    BitmapDescriptor.fromAssetImage(const ImageConfiguration(),
+            "assets/Person.png") // temporarily yahaan sirf test karne ke liye ye image rakhi hai
+        .then(
+      (icon) {
+        setState(() {
+          markerIcon = icon;
+        });
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: GoogleMap(
+        zoomControlsEnabled: false,
+        compassEnabled: false,
+        initialCameraPosition: CameraPosition(
+          target: initialLocation,
+          zoom: 14,
+        ),
+        markers: {
+          Marker(
+            markerId: const MarkerId("marker1"),
+            position: const LatLng(30.275164684505096, 77.04757952988390),
+            draggable: false,
+          ),
+          Marker(
+              markerId: const MarkerId("marker2"),
+              position: const LatLng(30.275164684505321, 77.04757952988723),
+              draggable: false,
+              onTap: onTap),
+        },
+      ),
+    );
+  }
+}
 
 class MapPage extends StatelessWidget {
   @override
@@ -7,7 +76,7 @@ class MapPage extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          Container(color: Colors.pink), // will be replaced by actual map
+          MapScreen(),
           Positioned(
             top: MediaQuery.of(context).size.height / 14,
             left: MediaQuery.of(context).size.width / 6.5,
@@ -74,4 +143,11 @@ class MapPage extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget bottomSheetbuilder(BuildContext context) {
+  Size deviceSize = MediaQuery.of(context).size;
+  return SizedBox(
+    height: deviceSize.height / 2,
+  );
 }
