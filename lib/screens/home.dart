@@ -49,20 +49,20 @@ class _MyHomePageState extends State<MyHomePage> {
             },
           ),
         ],
-        titleSpacing: 50.0,
+        titleSpacing: 45.0,
         title: Row(
           children: [
             Image.asset(
               'assets/app icon.png',
-              height: screenSize.width * 0.1,
-              width: screenSize.width * 0.1,
+              height: screenSize.width * 0.11,
+              width: screenSize.width * 0.11,
             ),
             SizedBox(width: 1.0),
             Text(
               'Aqua Watch',
               style: TextStyle(
-                color: Colors.black,
-                fontSize: screenSize.width * 0.06,
+                color: AppColors.black,
+                fontSize: screenSize.width * 0.07,
                 fontWeight: FontWeight.bold,
               ),
             ),

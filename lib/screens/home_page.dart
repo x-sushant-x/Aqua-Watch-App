@@ -36,7 +36,7 @@ class _PostCardState extends State<PostCard> {
         color: AppColors.white,
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.4),
+            color: AppColors.grey.withOpacity(0.4),
             spreadRadius: 0.1,
             blurRadius: 1,
             offset: Offset(0, 1),
@@ -70,7 +70,7 @@ class _PostCardState extends State<PostCard> {
                           text: widget.name,
                           style: TextStyle(
                             fontWeight: FontWeight.normal,
-                            fontSize: 15,
+                            fontSize: 14,
                             color: AppColors.black,
                           ),
                         ),
@@ -78,7 +78,7 @@ class _PostCardState extends State<PostCard> {
                           text: '  ${widget.date}',
                           style: TextStyle(
                             fontWeight: FontWeight.normal,
-                            fontSize: 15,
+                            fontSize: 14,
                             color: AppColors.grey,
                           ),
                         ),
@@ -139,10 +139,10 @@ class _PostCardState extends State<PostCard> {
                         color: AppColors.grey,
                       ),
                     ),
-                    SizedBox(width: 16.0),
+                    SizedBox(width: 12.0),
                     Text(
                       'Damage : ${widget.damageCount}',
-                      textScaleFactor: 1.1,
+                      textScaleFactor: 1.0,
                       style: TextStyle(
                         color: AppColors.grey,
                       ),
@@ -269,7 +269,7 @@ class _HomePageState extends State<HomePage> {
                             borderRadius: BorderRadius.circular(
                                 5.0), // Set circular radius to 5
                             border: Border.all(color: Colors.black, width: 1.0),
-                            color: Colors.white,
+                            color: AppColors.white,
                           ),
                           child: Center(
                             child: Text('Flood'),
@@ -283,7 +283,7 @@ class _HomePageState extends State<HomePage> {
                             borderRadius: BorderRadius.circular(
                                 5.0), // Set circular radius to 5
                             border: Border.all(color: Colors.black, width: 1.0),
-                            color: Colors.white,
+                            color: AppColors.white,
                           ),
                           child: Center(
                             child: Text('Clean Water'),
@@ -296,8 +296,9 @@ class _HomePageState extends State<HomePage> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(
                                 5.0), // Set circular radius to 5
-                            border: Border.all(color: Colors.black, width: 1.0),
-                            color: Colors.white,
+                            border:
+                                Border.all(color: AppColors.black, width: 1.0),
+                            color: AppColors.white,
                           ),
                           child: Center(
                             child: Text('Drainage'),
@@ -314,8 +315,9 @@ class _HomePageState extends State<HomePage> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(
                                 5.0), // Set circular radius to 5
-                            border: Border.all(color: Colors.black, width: 1.0),
-                            color: Colors.white,
+                            border:
+                                Border.all(color: AppColors.black, width: 1.0),
+                            color: AppColors.white,
                           ),
                           child: Center(
                             child: Text('Ponds'),
@@ -328,8 +330,9 @@ class _HomePageState extends State<HomePage> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(
                                 5.0), // Set circular radius to 5
-                            border: Border.all(color: Colors.black, width: 1.0),
-                            color: Colors.white,
+                            border:
+                                Border.all(color: AppColors.black, width: 1.0),
+                            color: AppColors.white,
                           ),
                           child: Center(
                             child: Text('Others'),
@@ -343,7 +346,7 @@ class _HomePageState extends State<HomePage> {
                         // Handle the upload action
                       },
                       style: ElevatedButton.styleFrom(
-                          primary: Colors.black,
+                          primary: AppColors.black,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(
                                 5.0), // Set circular radius to 5
@@ -353,7 +356,7 @@ class _HomePageState extends State<HomePage> {
                         'Upload',
                         style: TextStyle(
                           fontSize: 20.0,
-                          color: Colors.white,
+                          color: AppColors.white,
                         ),
                       ),
                     ),
@@ -412,7 +415,7 @@ class _HomePageState extends State<HomePage> {
                       color: AppColors.white,
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.grey.withOpacity(0.4),
+                          color: AppColors.grey.withOpacity(0.4),
                           spreadRadius: 0.1,
                           blurRadius: 1,
                           offset: Offset(0, 1),
