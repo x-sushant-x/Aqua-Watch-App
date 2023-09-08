@@ -82,8 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: Image.asset(
                 'assets/Home.png', // Replace with your SVG image
-                width: 24,
-                height: 24,
+                width: 24, height: 24,
                 color: _selectedIndex == 0 ? AppColors.black : AppColors.grey,
               ),
             ),
