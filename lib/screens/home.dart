@@ -32,6 +32,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: screenSize.height / 13,
         backgroundColor: AppColors.white2,
         elevation: 0.0,
         iconTheme: IconThemeData(color: AppColors.black),
@@ -50,23 +51,26 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
         titleSpacing: 45.0,
-        title: Row(
-          children: [
-            Image.asset(
-              'assets/app icon.png',
-              height: screenSize.width * 0.11,
-              width: screenSize.width * 0.11,
-            ),
-            SizedBox(width: 1.0),
-            Text(
-              'Aqua Watch',
-              style: TextStyle(
-                color: AppColors.black,
-                fontSize: screenSize.width * 0.07,
-                fontWeight: FontWeight.bold,
+        title: Padding(
+          padding: const EdgeInsets.only(top: 3, left: 5),
+          child: Row(
+            children: [
+              Image.asset(
+                'assets/app icon.png',
+                height: screenSize.width * 0.11,
+                width: screenSize.width * 0.11,
               ),
-            ),
-          ],
+              SizedBox(width: 1.0),
+              Text(
+                'Aqua Watch',
+                style: TextStyle(
+                  color: AppColors.black,
+                  fontSize: screenSize.width * 0.05,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
         ),
         centerTitle: true,
       ),

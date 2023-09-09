@@ -32,14 +32,14 @@ class _PostCardState extends State<PostCard> {
     return Container(
       margin: EdgeInsets.only(bottom: 8.0),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.0),
+        borderRadius: BorderRadius.circular(16.0),
         color: AppColors.white,
         boxShadow: [
           BoxShadow(
-            color: AppColors.grey.withOpacity(0.4),
+            color: AppColors.grey.withOpacity(0.6),
             spreadRadius: 0.1,
             blurRadius: 1,
-            offset: Offset(0, 1),
+            offset: Offset(0, 0),
           ),
         ],
       ),
@@ -52,14 +52,14 @@ class _PostCardState extends State<PostCard> {
               Row(
                 children: [
                   Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: EdgeInsets.all(screenSize.width / 29),
                     child: CircleAvatar(
                       backgroundColor: AppColors.grey,
                       radius: screenSize.width * 0.04,
                       child: Image.asset(
                         'assets/app icon.png',
-                        width: screenSize.width * 0.08,
-                        height: screenSize.width * 0.08,
+                        width: screenSize.width * 0.1,
+                        height: screenSize.width * 0.1,
                       ),
                     ),
                   ),
@@ -69,19 +69,19 @@ class _PostCardState extends State<PostCard> {
                         TextSpan(
                           text: widget.name,
                           style: TextStyle(
-                            fontWeight: FontWeight.normal,
-                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
                             color: AppColors.black,
                           ),
                         ),
-                        TextSpan(
-                          text: '  ${widget.date}',
-                          style: TextStyle(
-                            fontWeight: FontWeight.normal,
-                            fontSize: 14,
-                            color: AppColors.grey,
-                          ),
-                        ),
+                        // TextSpan(
+                        //   text: '  ${widget.date}',
+                        //   style: TextStyle(
+                        //     fontWeight: FontWeight.normal,
+                        //     fontSize: 14,
+                        //     color: AppColors.grey,
+                        //   ),
+                        // ),
                       ],
                     ),
                   )
@@ -90,27 +90,22 @@ class _PostCardState extends State<PostCard> {
               PopupMenuButton(
                 itemBuilder: (context) => [
                   PopupMenuItem(
-                    child: Text('Option 1'),
-                  ),
-                  PopupMenuItem(
-                    child: Text('Option 2'),
-                  ),
-                  PopupMenuItem(
-                    child: Text('Option 3'),
+                    child: Text(widget.date),
                   ),
                 ],
                 icon: Icon(
                   Icons.more_vert,
-                  color: AppColors.grey,
+                  color: Colors.grey.shade700,
+                  size: 22,
                 ),
               ),
             ],
           ),
           Image.network(
-            "https://img.freepik.com/free-vector/app-development-illustration_52683-47931.jpg?w=2000",
+            widget.imageUrl,
             fit: BoxFit.cover,
             width: double.infinity,
-            height: screenSize.width * 0.5,
+            height: screenSize.width * 0.8,
           ),
           Padding(
             padding: EdgeInsets.all(16.0),
@@ -120,40 +115,42 @@ class _PostCardState extends State<PostCard> {
                 Text(
                   widget.caption,
                   style: TextStyle(
-                    fontWeight: FontWeight.normal,
-                    fontSize: 19.0,
-                  ),
-                ),
-                SizedBox(height: 8.0),
-                Divider(),
-                Row(
-                  children: [
-                    Icon(
-                      Icons.favorite_border,
-                      color: AppColors.grey,
-                    ),
-                    SizedBox(width: 4.0),
-                    Text(
-                      '${widget.likeCount}',
-                      style: TextStyle(
-                        color: AppColors.grey,
-                      ),
-                    ),
-                    SizedBox(width: 12.0),
-                    Text(
-                      'Damage : ${widget.damageCount}',
-                      textScaleFactor: 1.0,
-                      style: TextStyle(
-                        color: AppColors.grey,
-                      ),
-                    ),
-                    Spacer(),
-                    Image.asset('assets/Navigation.png'),
-                  ],
+                      fontWeight: FontWeight.normal,
+                      fontSize: 16.0,
+                      color: AppColors.black,
+                      height: 1.4),
                 ),
               ],
             ),
           ),
+          Divider(
+            color: Colors.grey.shade400,
+            height: 0,
+          ),
+          Padding(
+            padding: EdgeInsets.all(screenSize.width / 30),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.favorite_border,
+                  color: AppColors.grey,
+                  size: 20,
+                ),
+                SizedBox(width: screenSize.width / 50),
+                Text(
+                  '${widget.likeCount}',
+                  style: TextStyle(color: AppColors.grey, fontSize: 14),
+                ),
+                SizedBox(width: screenSize.width / 20),
+                Text(
+                  'Damage : ${widget.damageCount}',
+                  style: TextStyle(color: AppColors.grey, fontSize: 15),
+                ),
+                Spacer(),
+                Image.asset('assets/Navigation.png'),
+              ],
+            ),
+          )
         ],
       ),
     );
@@ -411,14 +408,14 @@ class _HomePageState extends State<HomePage> {
                   child: Container(
                     height: screenSize.width * 0.13,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5.0),
+                      borderRadius: BorderRadius.circular(7.0),
                       color: AppColors.white,
                       boxShadow: [
                         BoxShadow(
-                          color: AppColors.grey.withOpacity(0.4),
+                          color: AppColors.grey.withOpacity(0.6),
                           spreadRadius: 0.1,
                           blurRadius: 1,
-                          offset: Offset(0, 1),
+                          offset: Offset(0, 0),
                         ),
                       ],
                     ),
@@ -451,7 +448,7 @@ class _HomePageState extends State<HomePage> {
                   height: screenSize.width * 0.13,
                   decoration: BoxDecoration(
                     color: AppColors.black,
-                    borderRadius: BorderRadius.circular(5.0),
+                    borderRadius: BorderRadius.circular(7.0),
                   ),
                   child: IconButton(
                     icon: Icon(Icons.search, color: AppColors.white),
@@ -462,13 +459,13 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ),
-            SizedBox(height: 16.0),
+            SizedBox(height: screenSize.height / 25),
             PostCard(
               avatarImageUrl: 'URL_TO_AVATAR_IMAGE',
-              name: 'UserName',
+              name: 'Sushant Dhiman',
               date: '21 August 9:38 A.M',
               imageUrl:
-                  'https://img.freepik.com/free-vector/app-development-illustration_52683-47931.jpg?w=2000',
+                  'https://images.indianexpress.com/2022/08/waterlogging-gurgaon.jpg',
               caption: 'Water logging near Salar ganj Panipat (132101)',
               likeCount: 42,
               damageCount: 303,
