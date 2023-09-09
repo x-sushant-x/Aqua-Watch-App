@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import './colors.dart';
 
 class CustomOutlinedButton extends StatelessWidget {
   CustomOutlinedButton(
@@ -30,6 +31,41 @@ class CustomOutlinedButton extends StatelessWidget {
                   side: BorderSide(width: 1.4),
                   borderRadius: BorderRadius.circular(5))),
           child: Text(title),
+        ),
+      ),
+    );
+  }
+}
+
+class OutlineButtonIssueType extends StatelessWidget {
+  const OutlineButtonIssueType(
+      {super.key,
+      required this.deviceSize,
+      required this.title,
+      required this.onTap});
+
+  final Size deviceSize;
+  final String title;
+  final void Function()? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+          horizontal: deviceSize.width / 60, vertical: deviceSize.height / 150),
+      child: Expanded(
+        child: Container(
+          width: deviceSize.width / 3.8,
+          height: 34.0,
+          decoration: BoxDecoration(
+            borderRadius:
+                BorderRadius.circular(5.0), // Set circular radius to 5
+            border: Border.all(color: Colors.black, width: 1.0),
+            color: AppColors.white,
+          ),
+          child: Center(
+            child: Text(title),
+          ),
         ),
       ),
     );

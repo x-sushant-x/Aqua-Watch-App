@@ -1,5 +1,6 @@
 import 'package:aqua_watch_app/utils/colors.dart';
 import 'package:flutter/material.dart';
+import '../utils/buttons.dart';
 
 class PostCard extends StatefulWidget {
   final String avatarImageUrl;
@@ -168,6 +169,8 @@ class _HomePageState extends State<HomePage> {
   TextEditingController _searchController = TextEditingController();
 
   void _showUploadModal(BuildContext context) {
+    Size deviceSize = MediaQuery.of(context).size;
+
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -181,18 +184,18 @@ class _HomePageState extends State<HomePage> {
         return Container(
           padding: EdgeInsets.all(16.0),
           height: MediaQuery.of(context).size.height * 0.75,
-          child: Wrap(
-            spacing: 10.0, // Reduce the horizontal spacing
-            runSpacing: 10.0, // Reduce the vertical spacing
+          child: Column(
             children: [
               GestureDetector(
                 onTap: () {
                   // Handle tap to upload action
                 },
                 child: Container(
-                  height: 222.0,
-                  width: 319.0,
-                  margin: EdgeInsets.only(left: 5.0), // Reduce space here
+                  height: deviceSize.height / 3,
+                  width: deviceSize.width / 0.5,
+                  margin: EdgeInsets.symmetric(
+                      horizontal: deviceSize.width / 50,
+                      vertical: deviceSize.height / 70),
                   decoration: BoxDecoration(
                       color: AppColors.white2,
                       borderRadius: BorderRadius.circular(10.0),
@@ -227,138 +230,122 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-              Container(
-                padding: EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
+              Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: deviceSize.width / 50,
+                        vertical: deviceSize.height / 100),
+                    child: Container(
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(
-                            10.0), // Set circular radius to 10
+                        borderRadius: BorderRadius.circular(10.0),
                         border: Border.all(color: AppColors.grey, width: 1.0),
                       ),
-                      width: 319,
-                      height: 40, // Increase the height as needed
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: '   Describe Issue',
-                          hintStyle: TextStyle(fontSize: 20.0),
-                          border: InputBorder.none, // Remove the border line
+                      width: deviceSize.width / 0.5,
+                      height: deviceSize.height / 18,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: deviceSize.width / 28,
+                            vertical: deviceSize.height / 700),
+                        child: TextField(
+                          decoration: InputDecoration(
+                            hintText: 'Describe Issue',
+                            hintStyle: TextStyle(
+                                fontSize:
+                                    MediaQuery.of(context).devicePixelRatio *
+                                        6.5),
+                            border: InputBorder.none, // Remove the border line
+                          ),
                         ),
                       ),
                     ),
-                    SizedBox(height: 20.0),
-                    Text(
-                      'Issue Type',
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
-                    SizedBox(height: 20.0),
-                    Row(
-                      children: [
-                        Container(
-                          width: 90.0,
-                          height: 34.0,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(
-                                5.0), // Set circular radius to 5
-                            border: Border.all(color: Colors.black, width: 1.0),
-                            color: AppColors.white,
-                          ),
-                          child: Center(
-                            child: Text('Flood'),
-                          ),
-                        ),
-                        SizedBox(width: 10.0), // Reduce spacing
-                        Container(
-                          width: 90.0,
-                          height: 34.0,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(
-                                5.0), // Set circular radius to 5
-                            border: Border.all(color: Colors.black, width: 1.0),
-                            color: AppColors.white,
-                          ),
-                          child: Center(
-                            child: Text('Clean Water'),
-                          ),
-                        ),
-                        SizedBox(width: 10.0), // Reduce spacing
-                        Container(
-                          width: 90.0,
-                          height: 34.0,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(
-                                5.0), // Set circular radius to 5
-                            border:
-                                Border.all(color: AppColors.black, width: 1.0),
-                            color: AppColors.white,
-                          ),
-                          child: Center(
-                            child: Text('Drainage'),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 8.0),
-                    Row(
-                      children: [
-                        Container(
-                          width: 90.0,
-                          height: 34.0,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(
-                                5.0), // Set circular radius to 5
-                            border:
-                                Border.all(color: AppColors.black, width: 1.0),
-                            color: AppColors.white,
-                          ),
-                          child: Center(
-                            child: Text('Ponds'),
-                          ),
-                        ),
-                        SizedBox(width: 10.0), // Reduce spacing
-                        Container(
-                          width: 90.0,
-                          height: 34.0,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(
-                                5.0), // Set circular radius to 5
-                            border:
-                                Border.all(color: AppColors.black, width: 1.0),
-                            color: AppColors.white,
-                          ),
-                          child: Center(
-                            child: Text('Others'),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 16.0),
-                    ElevatedButton(
-                      onPressed: () {
-                        // Handle the upload action
-                      },
-                      style: ElevatedButton.styleFrom(
-                          primary: AppColors.black,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(
-                                5.0), // Set circular radius to 5
-                          ),
-                          minimumSize: Size(85, 34)),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: deviceSize.width / 50,
+                        right: deviceSize.width / 50,
+                        top: deviceSize.height / 45),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
                       child: Text(
-                        'Upload',
+                        'Issue Type',
                         style: TextStyle(
-                          fontSize: 20.0,
-                          color: AppColors.white,
+                          fontSize: MediaQuery.of(context).devicePixelRatio * 7,
+                          fontWeight: FontWeight.normal,
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        top: deviceSize.height / 40,
+                        bottom: 0,
+                        left: deviceSize.width / 120,
+                        right: deviceSize.width / 120),
+                    child: Row(
+                      children: [
+                        OutlineButtonIssueType(
+                            deviceSize: deviceSize,
+                            title: "Flood",
+                            onTap: () {}),
+                        OutlineButtonIssueType(
+                            deviceSize: deviceSize,
+                            title: "Clean Water",
+                            onTap: () {}),
+                        OutlineButtonIssueType(
+                            deviceSize: deviceSize,
+                            title: "Draingae",
+                            onTap: () {})
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        vertical: deviceSize.height / 6000,
+                        horizontal: deviceSize.width / 120),
+                    child: Row(
+                      children: [
+                        OutlineButtonIssueType(
+                            deviceSize: deviceSize,
+                            title: "Ponds",
+                            onTap: () {}),
+                        OutlineButtonIssueType(
+                            deviceSize: deviceSize,
+                            title: "Other",
+                            onTap: () {}),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: deviceSize.width / 50,
+                        top: deviceSize.height / 40),
+                    child: Align(
+                      alignment: Alignment.bottomLeft,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          // Handle the upload action
+                        },
+                        style: ElevatedButton.styleFrom(
+                            primary: AppColors.black,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                  5.0), // Set circular radius to 5
+                            ),
+                            minimumSize: Size(
+                                deviceSize.width / 20, deviceSize.height / 22)),
+                        child: Text(
+                          'Upload',
+                          style: TextStyle(
+                            fontSize:
+                                MediaQuery.of(context).devicePixelRatio * 6.5,
+                            color: AppColors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
