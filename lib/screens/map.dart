@@ -45,27 +45,25 @@ class _MapScreenState extends State<MapScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: GoogleMap(
-        zoomControlsEnabled: false,
-        compassEnabled: false,
-        initialCameraPosition: CameraPosition(
-          target: initialLocation,
-          zoom: 14,
-        ),
-        markers: {
-          Marker(
-            markerId: const MarkerId("marker1"),
-            position: const LatLng(30.275164684505096, 77.04757952988390),
-            draggable: false,
-          ),
-          Marker(
-              markerId: const MarkerId("marker2"),
-              position: const LatLng(30.275164684505321, 77.04757952988723),
-              draggable: false,
-              onTap: onTap),
-        },
+    return GoogleMap(
+      zoomControlsEnabled: false,
+      compassEnabled: false,
+      initialCameraPosition: CameraPosition(
+        target: initialLocation,
+        zoom: 14,
       ),
+      markers: {
+        Marker(
+          markerId: const MarkerId("marker1"),
+          position: const LatLng(30.275164684505096, 77.04757952988390),
+          draggable: false,
+        ),
+        Marker(
+            markerId: const MarkerId("marker2"),
+            position: const LatLng(30.275164684505321, 77.04757952988723),
+            draggable: false,
+            onTap: onTap),
+      },
     );
   }
 }
@@ -78,7 +76,7 @@ class MapPage extends StatelessWidget {
         children: [
           MapScreen(),
           Positioned(
-            top: MediaQuery.of(context).size.height / 14,
+            top: MediaQuery.of(context).size.height / 25,
             left: MediaQuery.of(context).size.width / 6.5,
             right: MediaQuery.of(context).size.width / 6.5,
             child: SafeArea(
