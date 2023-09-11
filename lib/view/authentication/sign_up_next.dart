@@ -22,74 +22,79 @@ class _sign_up_nextState extends State<sign_up_next> {
           children: [Column(mainAxisAlignment: MainAxisAlignment.end,children: [
             Container(height: h*0.3,
               width: w,
-              color: Colors.black,
+              color: Color.fromARGB(255, 66, 66, 66),
             ),]),
 
             Container(padding: EdgeInsets.only(right: w*0.1,left: w*0.1),
               child: Column(mainAxisAlignment: MainAxisAlignment.spaceBetween,children: [
-                Text("Pick 5 places where you visit frequently!",
-                    style:  GoogleFonts.lexend(textStyle: TextStyle(color: Colors.black,fontSize: 30,fontWeight: FontWeight.w500))),
+                Wrap(
+                  children: [
+                    Text("Pick 5 places where you visit frequently!",
+                        style:  GoogleFonts.lexend(textStyle:
+                        TextStyle(color: Color.fromARGB(255, 0, 0, 0),fontSize: 24,fontWeight: FontWeight.w500))),
+                  ],
+                ),
                 Column(children: [
-                  Container(height: h*0.6,width: w*0.85,
-
+                  Container(
+                    height: h * 0.6,
+                    width: w * 0.90,
                     padding: EdgeInsets.all(20),
-                    decoration: const BoxDecoration(color: Colors.white,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
                       borderRadius: BorderRadius.all(Radius.circular(20)),
                       boxShadow: [
                         BoxShadow(
-                          blurRadius: 2.0,
-                        ),
+                            blurRadius: 1.0, color: Colors.grey.shade500),
                       ],
                     ),
                     child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         TextFormField(
-                          decoration: const InputDecoration(suffixIcon: Image(
-                            image: AssetImage("assets/signup/Location.png"),
-                            width: 10,height: 10,
-
+                          decoration: InputDecoration(suffixIcon: Icon(
+                            Icons.location_on,
+                            color: Colors.grey.shade600,
                           ),
                             border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
                             labelText: 'Location One',
                           ),style: GoogleFonts.lexend(),
                         ),
                         TextFormField(
-                          decoration: const InputDecoration(suffixIcon: Image(
-                            image: AssetImage("assets/signup/Location.png"),
-                            width: 10,height: 10,
-
-                          ),
+                          decoration: InputDecoration(
+                            suffixIcon: Icon(
+                              Icons.location_on,
+                              color: Colors.grey.shade600,
+                            ),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.all(Radius.circular(10))),
                             labelText: 'Location Two',
                           ),style: GoogleFonts.lexend(),
                         ),
                         TextFormField(
-                          decoration: const InputDecoration(suffixIcon: Image(
-                            image: AssetImage("assets/signup/Location.png"),
-                            width: 10,height: 10,
-
-                          ),
+                          decoration: InputDecoration(
+                            suffixIcon: Icon(
+                              Icons.location_on,
+                              color: Colors.grey.shade600,
+                            ),
                             border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
                             labelText: 'Location Three',
                           ),style: GoogleFonts.lexend(),
                         ),
                         TextFormField(
-                          decoration: const InputDecoration(suffixIcon: Image(
-                            image: AssetImage("assets/signup/Location.png"),
-                            width: 10,height: 10,
-
-                          ),
+                          decoration: InputDecoration(
+                            suffixIcon: Icon(
+                              Icons.location_on,
+                              color: Colors.grey.shade600,
+                            ),
                             border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
                             labelText: 'Location Four',
                           ),style: GoogleFonts.lexend(),
                         ),
                         TextFormField(
-                          decoration: const InputDecoration(suffixIcon: Image(
-                            image: AssetImage("assets/signup/Location.png"),
-                            width: 10,height: 10,
-
-                          ),
+                          decoration: InputDecoration(
+                            suffixIcon: Icon(
+                              Icons.location_on,
+                              color: Colors.grey.shade600,
+                            ),
                             border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
                             labelText: 'Location Five',
                           ),style: GoogleFonts.lexend(),
@@ -100,9 +105,10 @@ class _sign_up_nextState extends State<sign_up_next> {
                             // Add your Google sign-up logic here
                           },
                           style: ElevatedButton.styleFrom(minimumSize: Size.fromHeight(h*0.07),
-                            backgroundColor: Colors.black, // Background color
+                            backgroundColor: Color.fromARGB(
+                                255, 37, 37, 37), // Background color
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
+                              borderRadius: BorderRadius.circular(10),
                             ),
                             padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
                           ),
@@ -110,7 +116,7 @@ class _sign_up_nextState extends State<sign_up_next> {
                               Text(
                                 "Continue",
                                 style: GoogleFonts.lexend(
-                                  textStyle: TextStyle(fontSize: 15, color: Colors.white),
+                                  textStyle: TextStyle(fontSize: 13, color: Colors.white),
                                 ),
                               )
                         )
@@ -127,7 +133,9 @@ class _sign_up_nextState extends State<sign_up_next> {
                   ),
                   child: Center(child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [Text("Already have account?",
-                      style: GoogleFonts.lexend(textStyle: TextStyle(fontSize: 18,color: Colors.black)),),
+                      style: GoogleFonts.lexend(textStyle: TextStyle(
+                          fontSize: 15,
+                          color: Color.fromARGB(255, 69, 69, 69))),),
                       TextButton(onPressed: (){
                         Navigator.push(
                           context,
@@ -135,7 +143,11 @@ class _sign_up_nextState extends State<sign_up_next> {
                         );
 
                       }, child: Text("Login",style: GoogleFonts.lexend(
-                          textStyle: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.black)),))],
+                          textStyle: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color:
+                              Color.fromARGB(255, 0, 0, 0))),))],
                   ),),
                 )
 

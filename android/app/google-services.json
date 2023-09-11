@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "257263284665",
+    "project_id": "aqua-watch-app",
+    "storage_bucket": "aqua-watch-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:257263284665:android:fd1dda93b6a97088e64668",
+        "android_client_info": {
+          "package_name": "com.example.aqua_watch_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "257263284665-86uku05e567oacci70qqpjuq386a6kau.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.aqua_watch_app",
+            "certificate_hash": "36164dbfbfc099f02b2129e2146dc80bc69cf6ae"
+          }
+        },
+        {
+          "client_id": "257263284665-sg2tb3s55tn8r9jgckdss7m3l79d6e3j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.aqua_watch_app",
+            "certificate_hash": "7a891fa8984723b42ed080324891fdc79e0a12eb"
+          }
+        },
+        {
+          "client_id": "257263284665-u1s0cpfma80dh3a5ierm75ofqc7k5dne.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC358DoK7qpFfhTBpI_PMLwtRDyTqeY10g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "257263284665-c4i7qu8fqj2hkdc9a5e75gem4phu96c6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "257263284665-mcka67elkclql4hh50lk0146dchj2lfs.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.aquaWatchApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

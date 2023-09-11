@@ -1,16 +1,24 @@
+import 'package:aqua_watch_app/controllers/authentication/api.dart';
 import 'package:aqua_watch_app/controllers/authentication/dropdown_controller.dart';
-import 'package:aqua_watch_app/controllers/authentication/google_auth.dart';
 import 'package:aqua_watch_app/controllers/authentication/location_controller.dart';
+import 'package:aqua_watch_app/controllers/authentication/google_auth.dart';
+import 'package:aqua_watch_app/screens/home_page.dart';
+import 'package:aqua_watch_app/utils/snackbar.dart';
 import 'package:aqua_watch_app/view/authentication/log_in.dart';
+import 'package:aqua_watch_app/view/authentication/sign_up_next.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
+import 'package:get/instance_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:geolocator/geolocator.dart';
 
 class sign_up extends StatelessWidget {
   final LocationController locationController = Get.put(LocationController());
   final DropdownController dropdownController = Get.put(DropdownController());
-  final TextEditingController PickLocController = TextEditingController();
-  final TextEditingController PhoneNumController = TextEditingController();
+  final TextEditingController locationTextController = TextEditingController();
+  final TextEditingController phoneTextController = TextEditingController();
+  final authApiController = Get.put(AuthAPIController());
 
   @override
   Widget build(BuildContext context) {
@@ -35,12 +43,17 @@ class sign_up extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Let's start with account\ncreation!",
-                      style: GoogleFonts.lexend(
-                          textStyle: TextStyle(
-                              color: Colors.black,
-                              fontSize: 24,
-                              fontWeight: FontWeight.w500))),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text("Let's start with account\ncreation!",
+                          style: GoogleFonts.lexend(
+                              textStyle: TextStyle(
+                                  color: Color.fromARGB(255, 0, 0, 0),
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.w500))),
+                    ],
+                  ),
                   Column(
                     children: [
                       Container(
@@ -65,7 +78,7 @@ class sign_up extends StatelessWidget {
                                       locationController.isLoading;
                                   if (Isloading.value) {
                                     return TextField(
-                                      controller: PickLocController,
+                                      controller: locationTextController,
                                       decoration: InputDecoration(
                                         suffixIcon: Icon(
                                           Icons.location_on,
@@ -74,17 +87,18 @@ class sign_up extends StatelessWidget {
                                         border: OutlineInputBorder(
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(10))),
-                                        labelText: 'Pick Location',
+                                        labelText: 'Fetching Location ......',
                                       ),
                                       style: GoogleFonts.lexend(),
                                     );
                                   } else {
-                                    PickLocController.text = locationcontroller
-                                        .placemarks.first.locality;
+                                    locationTextController.text =
+                                        locationcontroller
+                                            .placemarks.first.locality;
                                     return Column(
                                       children: [
                                         TextField(
-                                          controller: PickLocController,
+                                          controller: locationTextController,
                                           decoration: InputDecoration(
                                             suffixIcon: Icon(
                                               Icons.location_on,
@@ -106,7 +120,7 @@ class sign_up extends StatelessWidget {
                                   }
                                 }),
                             TextFormField(
-                              controller: PhoneNumController,
+                              controller: phoneTextController,
                               decoration: InputDecoration(
                                 suffixIcon: Icon(
                                   Icons.phone,
@@ -168,7 +182,11 @@ class sign_up extends StatelessWidget {
                                 Expanded(
                                     child: Text(
                                   "By Signing Up you agree to our terms and conditions.",
-                                  style: GoogleFonts.lexend(),
+                                  style: GoogleFonts.lexend(
+                                      textStyle: TextStyle(
+                                          fontSize: 13,
+                                          color:
+                                              Color.fromARGB(255, 69, 69, 69))),
                                 ))
                               ],
                             ),
@@ -176,9 +194,9 @@ class sign_up extends StatelessWidget {
                               height: 20,
                             ),
                             ElevatedButton(
-                              onPressed: () {
-                                if (PhoneNumController.text.isEmpty ||
-                                    PickLocController.text.isEmpty) {
+                              onPressed: () async {
+                                if (phoneTextController.text.isEmpty ||
+                                    locationTextController.text.isEmpty) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       duration: Duration(seconds: 2),
@@ -187,14 +205,18 @@ class sign_up extends StatelessWidget {
                                         style: GoogleFonts.lexend(
                                           textStyle: TextStyle(
                                               fontSize: 15,
-                                              color: Colors.black),
+                                              color: Color.fromARGB(
+                                                  255, 69, 69, 69)),
                                         ),
                                       ),
                                       backgroundColor: Color(0xfff6f6f6),
                                     ),
                                   );
                                 } else {
-                                  signInWithGoogle();
+                                  signInWithGoogle(
+                                      locationTextController.text.toString(),
+                                      dropdownController.selectedValue.toString(),
+                                      phoneTextController.text.toString());
                                 }
                               },
                               style: ElevatedButton.styleFrom(
@@ -216,7 +238,7 @@ class sign_up extends StatelessWidget {
                                     "Sign Up With Google",
                                     style: GoogleFonts.lexend(
                                       textStyle: TextStyle(
-                                          fontSize: 15, color: Colors.white),
+                                          fontSize: 13, color: Colors.white),
                                     ),
                                   )
                                 ],
