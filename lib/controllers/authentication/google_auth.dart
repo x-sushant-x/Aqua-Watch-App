@@ -1,6 +1,7 @@
 // ignore_for_file: unrelated_type_equality_checks
 
 import 'package:aqua_watch_app/controllers/authentication/api.dart';
+import 'package:aqua_watch_app/controllers/dialogs/dialog_controller.dart';
 import 'package:aqua_watch_app/screens/home.dart';
 import 'package:aqua_watch_app/utils/snackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,8 +13,9 @@ final FirebaseAuth _auth = FirebaseAuth.instance;
 final GoogleSignIn googleSignIn = GoogleSignIn();
 
 final authAPIController = Get.put(AuthAPIController());
+final dialogController = Get.put(DialogsController());
 
-Future<User?> signInWithGoogle(String location, language, phoneNumber) async {
+Future<User?> signUpWithGoogle(String location, language, phoneNumber) async {
   try {
     final GoogleSignInAccount? googleSignInAccount =
         await googleSignIn.signIn();
@@ -31,14 +33,58 @@ Future<User?> signInWithGoogle(String location, language, phoneNumber) async {
       if (user!.displayName == null ||
           user.email == null ||
           user.photoURL == null) {
-        print("User details not available");
+        dialogController.showErrorDialog('Google auth failed.');
         return null;
       }
 
-      await authAPIController
-          .addUserToDB(user.displayName ?? '', user.email, location, language,
-              user.photoURL, phoneNumber)
-          .then((value) => Get.to(MyHomePage()));
+      bool userAuthenticated = await authAPIController.addUserToDB(
+          user.displayName ?? '',
+          user.email,
+          location,
+          language,
+          user.photoURL,
+          phoneNumber);
+
+      userAuthenticated
+          ? Get.to(MyHomePage())
+          : dialogController.showErrorDialog('Google auth failed');
+
+      return user;
+    }
+  } catch (error) {
+    print("Error signing in with Google: $error");
+  }
+}
+
+Future<User?> signInWithGoogle() async {
+  try {
+    final GoogleSignInAccount? googleSignInAccount =
+        await googleSignIn.signIn();
+    if (googleSignInAccount != null) {
+      final GoogleSignInAuthentication googleSignInAuthentication =
+          await googleSignInAccount.authentication;
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleSignInAuthentication.accessToken,
+        idToken: googleSignInAuthentication.idToken,
+      );
+      final UserCredential authResult =
+          await _auth.signInWithCredential(credential);
+      final User? user = authResult.user;
+
+      if (user!.displayName == null ||
+          user.email == null ||
+          user.photoURL == null) {
+        dialogController.showErrorDialog('Google auth failed.');
+        return null;
+      }
+
+      bool userAuthenticated =
+          await authAPIController.loginFromDB(user.email ?? '');
+
+      userAuthenticated
+          ? Get.to(MyHomePage())
+          : dialogController.showErrorDialog('Google auth failed');
+
       return user;
     }
   } catch (error) {

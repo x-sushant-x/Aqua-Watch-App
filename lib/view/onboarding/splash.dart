@@ -1,3 +1,4 @@
+import 'package:aqua_watch_app/controllers/splash/splash_controller.dart';
 import 'package:aqua_watch_app/utils/buttons.dart';
 import 'package:aqua_watch_app/view/authentication/sign_up.dart';
 import 'package:flutter/material.dart';
@@ -67,7 +68,20 @@ Widget bottomSheetBuilder(BuildContext context) {
   );
 }
 
-class SplashPage extends StatelessWidget {
+class SplashPage extends StatefulWidget {
+  @override
+  State<SplashPage> createState() => _SplashPageState();
+}
+
+class _SplashPageState extends State<SplashPage> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    SplashController.isLoggedIn();
+  }
+
   @override
   Widget build(BuildContext context) {
     Size deviceSize = MediaQuery.of(context).size;

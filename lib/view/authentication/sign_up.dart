@@ -18,7 +18,6 @@ class sign_up extends StatelessWidget {
   final DropdownController dropdownController = Get.put(DropdownController());
   final TextEditingController locationTextController = TextEditingController();
   final TextEditingController phoneTextController = TextEditingController();
-  final authApiController = Get.put(AuthAPIController());
 
   @override
   Widget build(BuildContext context) {
@@ -213,10 +212,12 @@ class sign_up extends StatelessWidget {
                                     ),
                                   );
                                 } else {
-                                  signInWithGoogle(
+                                  signUpWithGoogle(
                                       locationTextController.text.toString(),
-                                      dropdownController.selectedValue.toString(),
-                                      phoneTextController.text.toString());
+                                      dropdownController.selectedValue
+                                          .toString(),
+                                      phoneTextController.text.toString()
+                                      );
                                 }
                               },
                               style: ElevatedButton.styleFrom(

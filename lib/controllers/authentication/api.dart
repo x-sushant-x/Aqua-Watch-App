@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:aqua_watch_app/controllers/dialogs/dialog_controller.dart';
+import 'package:aqua_watch_app/model/user/login_user.dart';
 import 'package:get/get.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
@@ -21,7 +22,7 @@ class AuthAPIController extends GetxController {
     dialogController.showLoadingDialog();
 
     try {
-      var response = await http.post(Uri.parse('http://192.168.142.212:5000/user'),
+      var response = await http.post(Uri.parse('http://192.168.1.6:5000/user'),
           headers: requestHeaders,
           body: jsonEncode({
             "name": name,
@@ -48,9 +49,48 @@ class AuthAPIController extends GetxController {
 
       return true;
     } catch (e) {
+      dialogController.hideDialog();
       print(e);
     }
 
+    return false;
+  }
+
+  Future<bool> loginFromDB(String email) async {
+    try {
+      dialogController.showLoadingDialog();
+      var response = await http.get(
+        Uri.parse('http://192.168.1.6:5000/login?email=$email'),
+        headers: requestHeaders,
+      );
+
+      print(response.body);
+      dialogController.hideDialog();
+
+      final body = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+        final resp = LoginUserResponse.fromJson(body);
+
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString("name", resp.user.name);
+        await prefs.setString("email", resp.user.email);
+        await prefs.setString("location", resp.user.location);
+        await prefs.setString("language", resp.user.language);
+        await prefs.setString("profilePicture", resp.user.profilePicture);
+        await prefs.setString("phoneNumber", resp.user.phoneNumber);
+        print('Details Set For User ${resp.user.name}');
+      }
+
+      if (response.statusCode != 200) {
+        dialogController.showErrorDialog(response.body);
+        return false;
+      }
+      return true;
+    } catch (e) {
+      dialogController.hideDialog();
+      print(e);
+    }
     return false;
   }
 }

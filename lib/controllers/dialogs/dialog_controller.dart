@@ -23,7 +23,7 @@ class DialogsController extends GetxController {
     Get.defaultDialog(
       title: title ?? 'Something went wrong!',
       middleText: message ??
-          'There was some problem while processing your request. Please mail us details about this issue at support@studyease.tech',
+          'There was some problem while processing your request.',
       titlePadding: const EdgeInsets.all(16),
       contentPadding:
           const EdgeInsets.only(bottom: 26, top: 8, left: 8, right: 8),
