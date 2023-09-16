@@ -4,6 +4,7 @@ import 'package:aqua_watch_app/view/authentication/sign_up.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Widget bottomSheetBuilder(BuildContext context) {
   Size deviceSize = MediaQuery.of(context).size;
@@ -74,12 +75,17 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     SplashController.isLoggedIn();
+  }
+
+  clearLogin() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
+    print("Prefs Cleared");
   }
 
   @override

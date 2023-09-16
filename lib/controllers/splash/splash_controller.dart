@@ -4,11 +4,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashController extends GetxController {
   static isLoggedIn() async {
-    final prefs = await SharedPreferences.getInstance();
-    String? email = prefs.getString("email");
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      String? email = prefs.getString("email");
 
-    if (email != "") {
-      Get.to(MyHomePage());
+      if (email != null) {
+        Get.to(MyHomePage());
+      }
+    } catch (e) {
+      print("Handling Error: $e");
     }
   }
 }

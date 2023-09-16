@@ -1,9 +1,12 @@
+import 'package:aqua_watch_app/view/onboarding/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:aqua_watch_app/screens/emergency.dart';
 import 'package:aqua_watch_app/screens/home_page.dart';
 import 'package:aqua_watch_app/screens/map.dart';
 import 'package:aqua_watch_app/screens/profile.dart';
 import 'package:aqua_watch_app/utils/colors.dart';
+import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -44,9 +47,12 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           actions: [
             IconButton(
-              icon: Icon(Icons.notifications_outlined),
-              onPressed: () {
-                // Add your bell icon onPressed action here
+              icon: Icon(Icons.logout),
+              onPressed: () async {
+                final prefs = await SharedPreferences.getInstance();
+                await prefs.clear();
+                print("Prefs Cleared");
+                Get.offAll(SplashPage());
               },
             ),
           ],
