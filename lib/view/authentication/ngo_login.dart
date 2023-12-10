@@ -18,12 +18,10 @@ import 'package:geolocator/geolocator.dart';
 class ngo_login extends StatelessWidget {
   final LocationController locationController = Get.put(LocationController());
   final DropdownController dropdownController = Get.put(DropdownController());
-  final TextEditingController emailTextController = TextEditingController();
-  final TextEditingController descriptionTextController =
-      TextEditingController();
   final TextEditingController locationTextController = TextEditingController();
   final TextEditingController phoneTextController = TextEditingController();
-
+  final TextEditingController usernameTextController = TextEditingController();
+  final TextEditingController passwordTextController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
@@ -104,7 +102,7 @@ class ngo_login extends StatelessWidget {
                               height: 20,
                             ),
                             TextFormField(
-                              controller: phoneTextController,
+                              controller: usernameTextController,
                               decoration: InputDecoration(
                                 suffixIconConstraints:
                                     BoxConstraints(maxHeight: 50, minWidth: 50),
@@ -119,7 +117,7 @@ class ngo_login extends StatelessWidget {
                               height: 5,
                             ),
                             TextFormField(
-                              controller: emailTextController,
+                              controller: passwordTextController,
                               decoration: InputDecoration(
                                 suffixIconConstraints:
                                     BoxConstraints(maxHeight: 50, minWidth: 50),
@@ -138,8 +136,8 @@ class ngo_login extends StatelessWidget {
                             ),
                             ElevatedButton(
                               onPressed: () async {
-                                if (phoneTextController.text.isEmpty ||
-                                    locationTextController.text.isEmpty) {
+                                if (usernameTextController.text.isEmpty ||
+                                    passwordTextController.text.isEmpty) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       duration: Duration(seconds: 2),
