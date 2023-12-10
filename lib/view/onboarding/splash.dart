@@ -1,3 +1,4 @@
+import 'package:aqua_watch_app/view/authentication/ngo_register.dart';
 import 'package:aqua_watch_app/controllers/splash/splash_controller.dart';
 import 'package:aqua_watch_app/utils/buttons.dart';
 import 'package:aqua_watch_app/view/authentication/sign_up.dart';
@@ -50,7 +51,9 @@ Widget bottomSheetBuilder(BuildContext context) {
                 CustomOutlinedButton(
                   deviceSize: deviceSize,
                   title: "NGOs",
-                  onTap: () {},
+                  onTap: () {
+                    Get.to(sign_up_ngo());
+                  },
                 ),
                 CustomOutlinedButton(
                   deviceSize: deviceSize,
