@@ -90,9 +90,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 onTap: () {
                   _onItemTapped(0);
                 },
-                child: Image.asset(
-                  'assets/Home.png', // Replace with your SVG image
-                  width: 24, height: 24,
+                child: Icon(
+                  Icons.home_rounded,
                   color: _selectedIndex == 0 ? AppColors.black : AppColors.grey,
                 ),
               ),
@@ -103,10 +102,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 onTap: () {
                   _onItemTapped(1);
                 },
-                child: Image.asset(
-                  'assets/Map Marker.png', // Replace with your SVG image
-                  width: 24,
-                  height: 24,
+                child: Icon(
+                  Icons.map,
                   color: _selectedIndex == 1 ? AppColors.black : AppColors.grey,
                 ),
               ),
@@ -117,10 +114,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 onTap: () {
                   _onItemTapped(2);
                 },
-                child: Image.asset(
-                  'assets/Siren.png', // Replace with your SVG image
-                  width: 24,
-                  height: 24,
+                child: Icon(
+                  Icons.emergency,
                   color: _selectedIndex == 2 ? AppColors.black : AppColors.grey,
                 ),
               ),
@@ -131,10 +126,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 onTap: () {
                   _onItemTapped(3);
                 },
-                child: Image.asset(
-                  'assets/Person.png', // Replace with your SVG image
-                  width: 24,
-                  height: 24,
+                child: Icon(
+                  Icons.person,
                   color: _selectedIndex == 3 ? AppColors.black : AppColors.grey,
                 ),
               ),

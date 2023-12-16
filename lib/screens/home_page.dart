@@ -137,10 +137,19 @@ class _PostCardState extends State<PostCard> {
             padding: EdgeInsets.all(screenSize.width / 30),
             child: Row(
               children: [
-                Icon(
-                  Icons.favorite_border,
-                  color: AppColors.grey,
-                  size: 20,
+                InkWell(
+                  onTap: () {
+                    /////////////////////////////////////////////////
+                    
+                    // Integrate Increase Like Count API.
+                                        
+                    /////////////////////////////////////////////////
+                  },
+                  child: Icon(
+                    Icons.favorite_border,
+                    color: AppColors.grey,
+                    size: 20,
+                  ),
                 ),
                 SizedBox(width: screenSize.width / 50),
                 Text(
@@ -153,7 +162,13 @@ class _PostCardState extends State<PostCard> {
                   style: TextStyle(color: AppColors.grey, fontSize: 15),
                 ),
                 Spacer(),
-                Icon(Icons.location_on, color: AppColors.grey,)
+                InkWell(onTap: () {
+                   /////////////////////////////////////////////////
+                    
+                    // Open Google Maps With Given Coordinates.
+                                        
+                    /////////////////////////////////////////////////
+                },child: Icon(Icons.location_on, color: AppColors.grey,))
               ],
             ),
           )
@@ -379,6 +394,7 @@ class _HomePageState extends State<HomePage> {
                 .substring(0, _searchController.text.length - 1)) {
       setState(() {
         _searchController.text = newText;
+        print(_searchController.text);
       });
     } else {
       _searchController.text = newText;
