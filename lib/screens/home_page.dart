@@ -507,7 +507,7 @@ class _HomePageState extends State<HomePage> {
           _showUploadModal(context);
         },
         backgroundColor: AppColors.black,
-        child: Icon(Icons.add),
+        child: Icon(Icons.add, color: AppColors.white,),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
