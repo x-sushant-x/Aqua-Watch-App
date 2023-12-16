@@ -22,7 +22,7 @@ class AuthAPIController extends GetxController {
     dialogController.showLoadingDialog();
 
     try {
-      var response = await http.post(Uri.parse('http://192.168.81.212:5000/user'),
+      var response = await http.post(Uri.parse('$baseURL/user'),
           headers: requestHeaders,
           body: jsonEncode({
             "name": name,
@@ -60,7 +60,7 @@ class AuthAPIController extends GetxController {
     try {
       dialogController.showLoadingDialog();
       var response = await http.get(
-        Uri.parse('http://192.168.81.212:5000/login?email=$email'),
+        Uri.parse('$baseURL/login?email=$email'),
         headers: requestHeaders,
       );
 

@@ -1,5 +1,9 @@
+import 'package:aqua_watch_app/controllers/posts/api.dart';
+import 'package:aqua_watch_app/model/post/post.dart';
 import 'package:aqua_watch_app/utils/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:http/http.dart';
 import '../utils/buttons.dart';
 
 class PostCard extends StatefulWidget {
@@ -9,7 +13,7 @@ class PostCard extends StatefulWidget {
   final String imageUrl;
   final String caption;
   final int likeCount;
-  final int damageCount;
+  final String time;
 
   const PostCard({
     required this.avatarImageUrl,
@@ -18,7 +22,7 @@ class PostCard extends StatefulWidget {
     required this.imageUrl,
     required this.caption,
     required this.likeCount,
-    required this.damageCount,
+    required this.time,
   });
 
   @override
@@ -91,7 +95,8 @@ class _PostCardState extends State<PostCard> {
               PopupMenuButton(
                 itemBuilder: (context) => [
                   PopupMenuItem(
-                    child: Text(widget.date),
+                    child: Text('Report Fake'),
+                  
                   ),
                 ],
                 icon: Icon(
@@ -144,11 +149,11 @@ class _PostCardState extends State<PostCard> {
                 ),
                 SizedBox(width: screenSize.width / 20),
                 Text(
-                  'Damage : ${widget.damageCount}',
+                  '${widget.date}  ${widget.time}',
                   style: TextStyle(color: AppColors.grey, fontSize: 15),
                 ),
                 Spacer(),
-                Image.asset('assets/Navigation.png'),
+                Icon(Icons.location_on, color: AppColors.grey,)
               ],
             ),
           )
@@ -167,6 +172,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   TextEditingController _searchController = TextEditingController();
+  final postController = Get.put(PostController());
 
   void _showUploadModal(BuildContext context) {
     Size deviceSize = MediaQuery.of(context).size;
@@ -447,15 +453,35 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
             SizedBox(height: screenSize.height / 25),
-            PostCard(
-              avatarImageUrl: 'URL_TO_AVATAR_IMAGE',
-              name: 'Sushant Dhiman',
-              date: '21 August 9:38 A.M',
-              imageUrl:
-                  'https://images.indianexpress.com/2022/08/waterlogging-gurgaon.jpg',
-              caption: 'Water logging near Salar ganj Panipat (132101)',
-              likeCount: 42,
-              damageCount: 303,
+            FutureBuilder<List<Post>>(
+              future: postController.fetchPosts(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return Center(child: Text('No events available'));
+                } else {
+                  return SizedBox(
+                    height: Get.height / 1.6,
+                    child: ListView.builder(
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        Post post = snapshot.data![index];
+                        return PostCard(
+                            avatarImageUrl: post.imageUrl,
+                            name: post.user,
+                            date: post.date,
+                            imageUrl: post.imageUrl,
+                            caption: post.description,
+                            likeCount: post.damageScore,
+                            time: post.time);
+                      },
+                    ),
+                  );
+                }
+              },
             ),
           ],
         ),
