@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
 import '../utils/buttons.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PostCard extends StatefulWidget {
   final String avatarImageUrl;
@@ -14,6 +15,7 @@ class PostCard extends StatefulWidget {
   final String caption;
   final int likeCount;
   final String time;
+  final List<double> coordinates;
 
   const PostCard({
     required this.avatarImageUrl,
@@ -23,6 +25,7 @@ class PostCard extends StatefulWidget {
     required this.caption,
     required this.likeCount,
     required this.time,
+    required this.coordinates,
   });
 
   @override
@@ -163,11 +166,14 @@ class _PostCardState extends State<PostCard> {
                 ),
                 Spacer(),
                 InkWell(onTap: () {
-                   /////////////////////////////////////////////////
-                    
-                    // Open Google Maps With Given Coordinates.
-                                        
-                    /////////////////////////////////////////////////
+                  try {
+                    launchUrl(Uri.parse('http://maps.google.com/maps?q=loc:${widget.coordinates[0]},${widget.coordinates[1]}'));
+                  } catch(e) {
+                    // https://en.wikipedia.org/wiki/Geo_URI_scheme
+                    launchUrl(Uri.parse('geo:${widget.coordinates[0]},${widget.coordinates[1]}'));
+                  }
+                  
+                   
                 },child: Icon(Icons.location_on, color: AppColors.grey,))
               ],
             ),
@@ -492,7 +498,9 @@ class _HomePageState extends State<HomePage> {
                             imageUrl: post.imageUrl,
                             caption: post.description,
                             likeCount: post.damageScore,
-                            time: post.time);
+                            time: post.time,
+                            coordinates: post.coordinates
+                            );
                       },
                     ),
                   );
