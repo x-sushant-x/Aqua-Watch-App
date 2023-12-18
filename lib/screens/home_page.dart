@@ -468,44 +468,46 @@ class _HomePageState extends State<HomePage> {
                   child: IconButton(
                     icon: Icon(Icons.search, color: AppColors.white),
                     onPressed: () {
-                      // Handle search button click
+                      postController.performSearch(_searchController.text);
                     },
                   ),
                 ),
               ],
             ),
             SizedBox(height: screenSize.height / 25),
-            FutureBuilder<List<Post>>(
-              future: postController.fetchPosts(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
-                } else if (snapshot.hasError) {
-                  return Center(child: Text('Error: ${snapshot.error}'));
-                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return Center(child: Text('No events available'));
-                } else {
-                  return SizedBox(
-                    height: Get.height / 1.6,
-                    child: ListView.builder(
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (context, index) {
-                        Post post = snapshot.data![index];
-                        return PostCard(
-                            avatarImageUrl: post.imageUrl,
-                            name: post.user,
-                            date: post.date,
-                            imageUrl: post.imageUrl,
-                            caption: post.description,
-                            likeCount: post.damageScore,
-                            time: post.time,
-                            coordinates: post.coordinates
-                            );
-                      },
-                    ),
-                  );
-                }
-              },
+            Obx(
+              () => FutureBuilder<List<Post>>(
+                future: postController.city.value == "" ? postController.fetchPosts() : postController.fetchPostsByCity(postController.city.value),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return Center(child: Text('No events available'));
+                  } else {
+                    return SizedBox(
+                      height: Get.height / 1.6,
+                      child: ListView.builder(
+                        itemCount: snapshot.data!.length,
+                        itemBuilder: (context, index) {
+                          Post post = snapshot.data![index];
+                          return PostCard(
+                              avatarImageUrl: post.imageUrl,
+                              name: post.user,
+                              date: post.date,
+                              imageUrl: post.imageUrl,
+                              caption: post.description,
+                              likeCount: post.damageScore,
+                              time: post.time,
+                              coordinates: post.coordinates
+                              );
+                        },
+                      ),
+                    );
+                  }
+                },
+              ),
             ),
           ],
         ),
