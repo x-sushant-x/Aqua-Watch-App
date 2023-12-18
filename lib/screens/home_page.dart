@@ -477,7 +477,7 @@ class _HomePageState extends State<HomePage> {
             SizedBox(height: screenSize.height / 25),
             Obx(
               () => FutureBuilder<List<Post>>(
-                future: _searchController.text == "" ? postController.fetchPosts() : postController.fetchPostsByCity(postController.city.value),
+                future: postController.city.value == "" ? postController.fetchPosts() : postController.fetchPostsByCity(postController.city.value),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(child: CircularProgressIndicator());

@@ -41,10 +41,12 @@ class PostController extends GetxController {
     
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = jsonDecode(response.body);
-      final List<dynamic> eventList = data['posts'];
+      final List<dynamic> eventList = data['data'];
       List<Post> events =
           eventList.map((event) => Post.fromJson(event)).toList();
+      print(events);
       return events;
+      
     } else {
       throw Exception('Failed to load events');
     }
