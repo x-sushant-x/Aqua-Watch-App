@@ -1,0 +1,13 @@
+#!/usr/bin/env python3
+
+# Script to auto update lib/.env according to current local ip
+# Only works in Linux!!!!!!!!!!!!!!!
+from os import popen, curdir, chdir
+
+ip = popen("hostname -i").read().split()[0]
+
+if not "lib" in curdir:
+    chdir("lib")
+
+with open(".env", "w") as file:
+    file.write("APIURL = http://{}:5000".format(ip))
