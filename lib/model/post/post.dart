@@ -1,4 +1,5 @@
 class Post {
+  final String id;
   final String user;
   final String date;
   final String time;
@@ -9,6 +10,7 @@ class Post {
   final String location;
 
   Post({
+    required this.id,
     required this.user,
     required this.date,
     required this.time,
@@ -21,6 +23,7 @@ class Post {
 
   factory Post.fromJson(Map<String, dynamic> json) {
     return Post(
+      id: json['id'],
       user: json['user'],
       date: json['date'],
       time: json['time'],

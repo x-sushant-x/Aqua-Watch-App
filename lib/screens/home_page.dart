@@ -3,7 +3,6 @@ import 'package:aqua_watch_app/model/post/post.dart';
 import 'package:aqua_watch_app/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart';
 import '../utils/buttons.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -192,7 +191,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  TextEditingController _searchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
   final postController = Get.put(PostController());
 
   void _showUploadModal(BuildContext context) {
