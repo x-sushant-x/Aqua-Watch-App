@@ -1,50 +1,39 @@
-import 'package:aqua_watch_app/view/onboarding/splash.dart';
+import 'package:aqua_watch_app/controllers/map_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import '../model/map/map_point.dart';
 
-// Called when a marker is clicked on map
 
-class MapScreen extends StatefulWidget {
-  const MapScreen();
-  @override
-  State<MapScreen> createState() => _MapScreenState();
-}
+class MapScreen extends StatelessWidget {
+  final LatLng initialLocation;
+  final List<MapPoint> pointList;
 
-class _MapScreenState extends State<MapScreen> {
-  LatLng initialLocation = const LatLng(30.27688088312732, 77.04792749406771);
-  BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
-
-  void onTap() {
-    // kisi bhi marker ko tap karne pe bottom sheet khulegi
-    showModalBottomSheet(
-        context: context,
-        builder: bottomSheetBuilder,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(20))));
-  }
-
-  @override
-  void initState() {
-    // ye init state or set state wala code copy kiya, ye sab custom marker daalne ke liye hain, samaj nahi aa raha
-    addCustomIcon();
-    super.initState();
-  }
-
-  void addCustomIcon() {
-    BitmapDescriptor.fromAssetImage(const ImageConfiguration(),
-            "assets/Person.png") // temporarily yahaan sirf test karne ke liye ye image rakhi hai
-        .then(
-      (icon) {
-        setState(() {
-          markerIcon = icon;
-        });
-      },
-    );
-  }
+  const MapScreen ({required this.initialLocation, required this.pointList});
 
   @override
   Widget build(BuildContext context) {
+
+    var controller = Get.put(MapController());
+
+    // I have put this inside parent build method because this requires context to be passed
+    // which is availble in this build method
+    Widget mapBottomSheetBuilder(BuildContext context) {
+      Size deviceSize = MediaQuery.of(context).size;
+      return SizedBox(
+        // Set width to full of available size
+        // Height will be auto occupied according to size of image
+        width: MediaQuery.of(context).size.width,
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: deviceSize.height/30,
+            vertical: deviceSize.height/20
+            ),
+          child: Image.network(controller.selectedMapPoint.imageUrl)),
+      );
+    }
+
     return GoogleMap(
       zoomControlsEnabled: false,
       compassEnabled: false,
@@ -52,29 +41,51 @@ class _MapScreenState extends State<MapScreen> {
         target: initialLocation,
         zoom: 14,
       ),
-      markers: {
-        Marker(
-          markerId: const MarkerId("marker1"),
-          position: const LatLng(30.275164684505096, 77.04757952988390),
-          draggable: false,
-        ),
-        Marker(
-            markerId: const MarkerId("marker2"),
-            position: const LatLng(30.275164684505321, 77.04757952988723),
-            draggable: false,
-            onTap: onTap),
-      },
+      markers: pointList.map(
+        // e is a MapPoint type
+        (e) => Marker(
+          // using image url as unique marker id
+          markerId: MarkerId(e.imageUrl),
+          position: LatLng(e.coordinates[0], e.coordinates[1]),
+          icon: e.damageScore > 100 ? BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed) : BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
+          onTap: () {
+            controller.selectedMapPoint = e;
+            showModalBottomSheet(context: context, showDragHandle:true, builder: mapBottomSheetBuilder, shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(20))));
+            },
+          draggable: false
+          )).toSet(),
     );
   }
 }
 
-class MapPage extends StatelessWidget {
+class MapPage extends StatefulWidget {
+  @override
+  State<MapPage> createState() => _MapPageState();
+}
+
+class _MapPageState extends State<MapPage> {
+  var controller = Get.put(MapController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
-          MapScreen(),
+          FutureBuilder(future: controller.getMapPoints(), builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              return Center(child: Text('No points available'));
+            } else {
+              return MapScreen(
+                // First MapPointer returned is treated as initial location (centre location)
+                initialLocation: LatLng(snapshot.data![0].coordinates[0], snapshot.data![0].coordinates[1]),
+                pointList: snapshot.data!,);
+            }
+          }),
+  
           Positioned(
             top: MediaQuery.of(context).size.height / 25,
             left: MediaQuery.of(context).size.width / 6.5,
@@ -141,11 +152,4 @@ class MapPage extends StatelessWidget {
       ),
     );
   }
-}
-
-Widget bottomSheetbuilder(BuildContext context) {
-  Size deviceSize = MediaQuery.of(context).size;
-  return SizedBox(
-    height: deviceSize.height / 2,
-  );
 }
