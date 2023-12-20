@@ -1,5 +1,4 @@
 import 'package:aqua_watch_app/controllers/map_controller.dart';
-import 'package:aqua_watch_app/view/onboarding/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,15 +15,24 @@ class MapScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    var controller = Get.put(MapController());
 
-    void onTap() {
-    // kisi bhi marker ko tap karne pe bottom sheet khulegi
-    showModalBottomSheet(
-        context: context,
-        builder: bottomSheetBuilder,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(20))));
-  }
+    // I have put this inside parent build method because this requires context to be passed
+    // which is availble in this build method
+    Widget mapBottomSheetBuilder(BuildContext context) {
+      Size deviceSize = MediaQuery.of(context).size;
+      return SizedBox(
+        // Set width to full of available size
+        // Height will be auto occupied according to size of image
+        width: MediaQuery.of(context).size.width,
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: deviceSize.height/30,
+            vertical: deviceSize.height/20
+            ),
+          child: Image.network(controller.selectedMapPoint.imageUrl)),
+      );
+    }
 
     return GoogleMap(
       zoomControlsEnabled: false,
@@ -34,10 +42,17 @@ class MapScreen extends StatelessWidget {
         zoom: 14,
       ),
       markers: pointList.map(
+        // e is a MapPoint type
         (e) => Marker(
+          // using image url as unique marker id
           markerId: MarkerId(e.imageUrl),
           position: LatLng(e.coordinates[0], e.coordinates[1]),
-          onTap: onTap,
+          icon: e.damageScore > 100 ? BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed) : BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
+          onTap: () {
+            controller.selectedMapPoint = e;
+            showModalBottomSheet(context: context, showDragHandle:true, builder: mapBottomSheetBuilder, shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(20))));
+            },
           draggable: false
           )).toSet(),
     );
@@ -65,7 +80,7 @@ class _MapPageState extends State<MapPage> {
               return Center(child: Text('No points available'));
             } else {
               return MapScreen(
-                // First pointer returned is treated as initial location
+                // First MapPointer returned is treated as initial location (centre location)
                 initialLocation: LatLng(snapshot.data![0].coordinates[0], snapshot.data![0].coordinates[1]),
                 pointList: snapshot.data!,);
             }
@@ -137,11 +152,4 @@ class _MapPageState extends State<MapPage> {
       ),
     );
   }
-}
-
-Widget bottomSheetbuilder(BuildContext context) {
-  Size deviceSize = MediaQuery.of(context).size;
-  return SizedBox(
-    height: deviceSize.height / 2,
-  );
 }
