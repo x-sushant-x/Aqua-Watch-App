@@ -1,4 +1,5 @@
 import 'package:aqua_watch_app/controllers/posts/api.dart';
+import 'package:aqua_watch_app/controllers/posts/new_post.dart';
 import 'package:aqua_watch_app/model/post/post.dart';
 import 'package:aqua_watch_app/utils/colors.dart';
 import 'package:flutter/material.dart';
@@ -193,6 +194,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final TextEditingController _searchController = TextEditingController();
   final postController = Get.put(PostController());
+  final newPostController = Get.put(NewPostController());
 
   void _showUploadModal(BuildContext context) {
     Size deviceSize = MediaQuery.of(context).size;
@@ -214,7 +216,7 @@ class _HomePageState extends State<HomePage> {
             children: [
               GestureDetector(
                 onTap: () {
-                  // Handle tap to upload action
+                  newPostController.newPost();
                 },
                 child: Container(
                   height: deviceSize.height / 3,
