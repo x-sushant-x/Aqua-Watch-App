@@ -216,7 +216,7 @@ class _HomePageState extends State<HomePage> {
             children: [
               GestureDetector(
                 onTap: () {
-                  newPostController.newPost();
+                  newPostController.askForImageOrCamera();
                 },
                 child: Container(
                   height: deviceSize.height / 3,
@@ -352,7 +352,7 @@ class _HomePageState extends State<HomePage> {
                       alignment: Alignment.bottomLeft,
                       child: ElevatedButton(
                         onPressed: () {
-                          // Handle the upload action
+                          newPostController.newPost();
                         },
                         style: ElevatedButton.styleFrom(
                             primary: AppColors.black,

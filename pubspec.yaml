@@ -46,6 +46,8 @@ dependencies:
   shared_preferences:
   url_launcher: ^6.2.2
   image_picker: ^1.0.5
+  firebase_storage: ^11.5.6
+  uuid: ^4.2.2
 dev_dependencies:
 
   # The "flutter_lints" package below contains a set of recommended lints to
