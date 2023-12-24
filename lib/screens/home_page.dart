@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:aqua_watch_app/controllers/posts/api.dart';
 import 'package:aqua_watch_app/controllers/posts/new_post.dart';
 import 'package:aqua_watch_app/model/post/post.dart';
 import 'package:aqua_watch_app/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import '../utils/buttons.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -99,7 +102,6 @@ class _PostCardState extends State<PostCard> {
                 itemBuilder: (context) => [
                   PopupMenuItem(
                     child: Text('Report Fake'),
-                  
                   ),
                 ],
                 icon: Icon(
@@ -143,9 +145,9 @@ class _PostCardState extends State<PostCard> {
                 InkWell(
                   onTap: () {
                     /////////////////////////////////////////////////
-                    
+
                     // Integrate Increase Like Count API.
-                                        
+
                     /////////////////////////////////////////////////
                   },
                   child: Icon(
@@ -165,16 +167,21 @@ class _PostCardState extends State<PostCard> {
                   style: TextStyle(color: AppColors.grey, fontSize: 15),
                 ),
                 Spacer(),
-                InkWell(onTap: () {
-                  try {
-                    launchUrl(Uri.parse('http://maps.google.com/maps?q=loc:${widget.coordinates[0]},${widget.coordinates[1]}'));
-                  } catch(e) {
-                    // https://en.wikipedia.org/wiki/Geo_URI_scheme
-                    launchUrl(Uri.parse('geo:${widget.coordinates[0]},${widget.coordinates[1]}'));
-                  }
-                  
-                   
-                },child: Icon(Icons.location_on, color: AppColors.grey,))
+                InkWell(
+                    onTap: () {
+                      try {
+                        launchUrl(Uri.parse(
+                            'http://maps.google.com/maps?q=loc:${widget.coordinates[0]},${widget.coordinates[1]}'));
+                      } catch (e) {
+                        // https://en.wikipedia.org/wiki/Geo_URI_scheme
+                        launchUrl(Uri.parse(
+                            'geo:${widget.coordinates[0]},${widget.coordinates[1]}'));
+                      }
+                    },
+                    child: Icon(
+                      Icons.location_on,
+                      color: AppColors.grey,
+                    ))
               ],
             ),
           )
@@ -195,6 +202,11 @@ class _HomePageState extends State<HomePage> {
   final TextEditingController _searchController = TextEditingController();
   final postController = Get.put(PostController());
   final newPostController = Get.put(NewPostController());
+  final newPostTextController = TextEditingController();
+
+  File? _imageFile;
+  final picker = ImagePicker();
+  bool _isImageSelected = false;
 
   void _showUploadModal(BuildContext context) {
     Size deviceSize = MediaQuery.of(context).size;
@@ -210,50 +222,74 @@ class _HomePageState extends State<HomePage> {
       ),
       builder: (BuildContext context) {
         return Container(
+          decoration: BoxDecoration(color: Colors.white),
           padding: EdgeInsets.all(16.0),
-          height: MediaQuery.of(context).size.height * 0.75,
+          height: MediaQuery.of(context).size.height * 0.70,
           child: Column(
             children: [
-              GestureDetector(
-                onTap: () {
-                  newPostController.askForImageOrCamera();
-                },
-                child: Container(
-                  height: deviceSize.height / 3,
-                  width: deviceSize.width / 0.5,
-                  margin: EdgeInsets.symmetric(
-                      horizontal: deviceSize.width / 50,
-                      vertical: deviceSize.height / 70),
-                  decoration: BoxDecoration(
-                      color: AppColors.white2,
-                      borderRadius: BorderRadius.circular(10.0),
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppColors.black.withOpacity(0.5),
-                          spreadRadius: 0.1,
-                          blurRadius: 1,
-                          offset: Offset(0, 0),
-                        ),
-                      ]),
+              Container(
+                height: deviceSize.height / 3,
+                width: deviceSize.width / 0.5,
+                margin: EdgeInsets.symmetric(
+                    horizontal: deviceSize.width / 50,
+                    vertical: deviceSize.height / 70),
+                decoration: BoxDecoration(
+                    color: AppColors.white2,
+                    borderRadius: BorderRadius.circular(10.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.black.withOpacity(0.5),
+                        spreadRadius: 0.1,
+                        blurRadius: 1,
+                        offset: Offset(0, 0),
+                      ),
+                    ]),
+                child: InkWell(
+                  onTap: () async {
+                    final pickedFile =
+                        await picker.pickImage(source: ImageSource.gallery);
+                    if (pickedFile != null) {
+                      setState(() {
+                        _imageFile = File(pickedFile.path);
+                        _isImageSelected = true;
+                      });
+                      print('Image Selected Successfully');
+                    } else {
+                      throw Exception("Cannot pick image");
+                    }
+                  },
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset(
-                        'assets/Upload File.png',
-                        height: 50.0, // Adjust the height as needed
-                      ),
-                      SizedBox(
-                          height: 16.0), // Add spacing between image and text
-                      Center(
-                        child: Text(
-                          'Tap to Upload',
-                          style: TextStyle(
-                            fontSize: 24.0,
-                            fontWeight: FontWeight.normal,
-                            color: AppColors.grey,
-                          ),
-                        ),
-                      ),
+                      _isImageSelected
+                          ? Image.file(
+                              _imageFile!,
+                              fit: BoxFit.fill,
+                              height: deviceSize.height / 4,
+                            )
+                          : Image.asset(
+                              'assets/Upload File.png',
+                              height: 50.0, // Adjust the height as needed
+                            ),
+                      _isImageSelected
+                          ? Container()
+                          : SizedBox(
+                              height:
+                                  16.0), // Add spacing between image and text
+                      _isImageSelected
+                          ? Container()
+                          : Center(
+                              child: Text(
+                                _isImageSelected
+                                    ? 'Image Selected '
+                                    : 'Tap To Upload',
+                                style: TextStyle(
+                                  fontSize: 24.0,
+                                  fontWeight: FontWeight.normal,
+                                  color: AppColors.grey,
+                                ),
+                              ),
+                            ),
                     ],
                   ),
                 ),
@@ -276,12 +312,10 @@ class _HomePageState extends State<HomePage> {
                             horizontal: deviceSize.width / 28,
                             vertical: deviceSize.height / 700),
                         child: TextField(
+                          controller: newPostTextController,
                           decoration: InputDecoration(
+                            // label: Text('Describe Issue'),
                             hintText: 'Describe Issue',
-                            hintStyle: TextStyle(
-                                fontSize:
-                                    MediaQuery.of(context).devicePixelRatio *
-                                        6.5),
                             border: InputBorder.none, // Remove the border line
                           ),
                         ),
@@ -315,15 +349,27 @@ class _HomePageState extends State<HomePage> {
                         OutlineButtonIssueType(
                             deviceSize: deviceSize,
                             title: "Flood",
-                            onTap: () {}),
+                            isSelected: false,
+                            onTap: () {
+                              newPostController.addNewPost(
+                                  _imageFile, newPostTextController.text);
+                            }),
                         OutlineButtonIssueType(
                             deviceSize: deviceSize,
                             title: "Clean Water",
-                            onTap: () {}),
+                            isSelected: false,
+                            onTap: () {
+                              newPostController.addNewPost(
+                                  _imageFile, newPostTextController.text);
+                            }),
                         OutlineButtonIssueType(
                             deviceSize: deviceSize,
-                            title: "Draingae",
-                            onTap: () {})
+                            title: "Drainage",
+                            isSelected: false,
+                            onTap: () {
+                              newPostController.addNewPost(
+                                  _imageFile, newPostTextController.text);
+                            })
                       ],
                     ),
                   ),
@@ -336,43 +382,23 @@ class _HomePageState extends State<HomePage> {
                         OutlineButtonIssueType(
                             deviceSize: deviceSize,
                             title: "Ponds",
-                            onTap: () {}),
+                            isSelected: false,
+                            onTap: () {
+                              newPostController.addNewPost(
+                                  _imageFile, newPostTextController.text);
+                            }),
                         OutlineButtonIssueType(
                             deviceSize: deviceSize,
                             title: "Other",
-                            onTap: () {}),
+                            isSelected: false,
+                            onTap: () {
+                              newPostController.addNewPost(
+                                  _imageFile, newPostTextController.text);
+                            }),
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        left: deviceSize.width / 50,
-                        top: deviceSize.height / 40),
-                    child: Align(
-                      alignment: Alignment.bottomLeft,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          newPostController.newPost();
-                        },
-                        style: ElevatedButton.styleFrom(
-                            primary: AppColors.black,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                  5.0), // Set circular radius to 5
-                            ),
-                            minimumSize: Size(
-                                deviceSize.width / 20, deviceSize.height / 22)),
-                        child: Text(
-                          'Upload',
-                          style: TextStyle(
-                            fontSize:
-                                MediaQuery.of(context).devicePixelRatio * 6.5,
-                            color: AppColors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                  //
                 ],
               ),
             ],
@@ -415,14 +441,13 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: AppColors.white2,
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
         child: Column(
           children: [
             Row(
               children: [
                 Expanded(
                   child: Container(
-                    height: screenSize.width * 0.13,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(7.0),
                       color: AppColors.white,
@@ -478,7 +503,10 @@ class _HomePageState extends State<HomePage> {
             SizedBox(height: screenSize.height / 25),
             Obx(
               () => FutureBuilder<List<Post>>(
-                future: postController.city.value == "" ? postController.fetchPosts() : postController.fetchPostsByCity(postController.city.value),
+                future: postController.city.value == ""
+                    ? postController.fetchPosts()
+                    : postController
+                        .fetchPostsByCity(postController.city.value),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(child: CircularProgressIndicator());
@@ -488,7 +516,7 @@ class _HomePageState extends State<HomePage> {
                     return Center(child: Text('No events available'));
                   } else {
                     return SizedBox(
-                      height: Get.height / 1.6,
+                      height: Get.height / 1.47,
                       child: ListView.builder(
                         itemCount: snapshot.data!.length,
                         itemBuilder: (context, index) {
@@ -501,8 +529,7 @@ class _HomePageState extends State<HomePage> {
                               caption: post.description,
                               likeCount: post.damageScore,
                               time: post.time,
-                              coordinates: post.coordinates
-                              );
+                              coordinates: post.coordinates);
                         },
                       ),
                     );
@@ -518,7 +545,10 @@ class _HomePageState extends State<HomePage> {
           _showUploadModal(context);
         },
         backgroundColor: AppColors.black,
-        child: Icon(Icons.add, color: AppColors.white,),
+        child: Icon(
+          Icons.add,
+          color: AppColors.white,
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );

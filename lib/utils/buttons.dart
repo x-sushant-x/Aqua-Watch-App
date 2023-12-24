@@ -42,10 +42,12 @@ class OutlineButtonIssueType extends StatelessWidget {
       {super.key,
       required this.deviceSize,
       required this.title,
-      required this.onTap});
+      required this.onTap,
+      required this.isSelected});
 
   final Size deviceSize;
   final String title;
+  final bool isSelected;
   final void Function()? onTap;
 
   @override
@@ -54,17 +56,24 @@ class OutlineButtonIssueType extends StatelessWidget {
       padding: EdgeInsets.symmetric(
           horizontal: deviceSize.width / 60, vertical: deviceSize.height / 150),
       child: Expanded(
-        child: Container(
-          width: deviceSize.width / 3.8,
-          height: 34.0,
-          decoration: BoxDecoration(
-            borderRadius:
-                BorderRadius.circular(5.0), // Set circular radius to 5
-            border: Border.all(color: Colors.black, width: 1.0),
-            color: AppColors.white,
-          ),
-          child: Center(
-            child: Text(title),
+        child: InkWell(
+          onTap: onTap,
+          child: Container(
+            width: deviceSize.width / 3.8,
+            height: 34.0,
+            decoration: BoxDecoration(
+              borderRadius:
+                  BorderRadius.circular(5.0), // Set circular radius to 5
+              border: Border.all(color: Colors.black, width: 1.0),
+              color: isSelected ? AppColors.black : AppColors.white,
+            ),
+            child: Center(
+              child: Text(
+                title,
+                style: TextStyle(
+                    color: isSelected ? Colors.white : AppColors.black),
+              ),
+            ),
           ),
         ),
       ),

@@ -1,67 +1,103 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:uuid/uuid.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'dart:convert';
+import 'dart:io';
 
-class ImageOrCameraController extends GetxController {
-  Future<XFile?>? crossfile;
-}
+import 'package:aqua_watch_app/controllers/authentication/location_controller.dart';
+import 'package:aqua_watch_app/controllers/dialogs/dialog_controller.dart';
+import 'package:aqua_watch_app/screens/home_page.dart';
+import 'package:aqua_watch_app/view/onboarding/splash.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class NewPostController extends GetxController {
-  
-  newPost() async {
-    
-    Firebase.initializeApp();
-    var cloudStorageRef = FirebaseStorage.instance.ref();
-    var imageOrCameraController = Get.put(ImageOrCameraController());
+  Map<String, String> requestHeaders = {
+    'Content-type': 'application/json',
+    'Accept': 'application/json'
+  };
 
-    XFile? xfile = await imageOrCameraController.crossfile;
+  String baseURL = dotenv.env["APIURL"] ?? '';
 
-    late Future<String> downloadURL;
-    
-    // Image should exist
-    if (xfile != null) {
-      // Generate a unique name for image
-      String imageUuid = Uuid().v6();
-      var cloudImageRef = cloudStorageRef.child(imageUuid+"."+xfile.name.split(".")[-1]);
-      var imgData = await xfile.readAsBytes();
-      var imgMeta = SettableMetadata(contentType: xfile.mimeType);
-      var task = cloudImageRef.putData(imgData, imgMeta);
-      task.then((p0) {
-        downloadURL = cloudImageRef.getDownloadURL().then((value) {
-          print(value);
-          return value;
-        });
-      });
-      // TODO: now the downloadURL is stored as a future in downloadURL variable, and it should be used in API
-    } else {
-      // TODO: show a dialog that user has not selected a picture
+  Future<String> uploadImageToFirebase(File image) async {
+    FirebaseStorage storage = FirebaseStorage.instance;
+    Reference storageReference =
+        storage.ref().child('images/${DateTime.now()}.png');
+
+    UploadTask uploadTask = storageReference.putFile(image);
+    TaskSnapshot snapshot = await uploadTask;
+
+    if (snapshot.state == TaskState.success) {
+      final String downloadURL = await snapshot.ref.getDownloadURL();
+      return downloadURL;
     }
-
-
+    return "";
   }
 
-  Future<XFile?> askForImageOrCamera() async {
-    var imageOrCameraController = Get.put(ImageOrCameraController());
-    final ImagePicker picker = ImagePicker();
-    Get.bottomSheet(
-      
-      SizedBox(
-          
-          width: Get.width,
-          child: Column(
-            
-            children: [
-              ListTile(title: Text("Gallery"), leading: Icon(Icons.image), onTap: () {imageOrCameraController.crossfile = picker.pickImage(source: ImageSource.gallery);Get.back();},),
-              ListTile(title: Text("Camera"), leading: Icon(Icons.camera_alt), onTap: () {imageOrCameraController.crossfile = picker.pickImage(source: ImageSource.camera);Get.back();})
-            ],
-          ),
-        ),
-      backgroundColor: Colors.white,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)))
-    );
-    return imageOrCameraController.crossfile;
+  Future<void> addNewPost(File? image, String description) async {
+    final dialogController = Get.put(DialogsController());
+    dialogController.showLoadingDialog();
+
+    final locationController = Get.put(LocationController());
+
+    // Fetching location coordinates
+    Position location = await Geolocator.getCurrentPosition();
+    final address = await locationController.getAddressFromLatLng(
+        location.latitude, location.longitude);
+
+    final String url = await uploadImageToFirebase(image!);
+
+    // Geting user data
+    final prefs = await SharedPreferences.getInstance();
+    final userID = prefs.getString("id");
+
+    DateTime now = DateTime.now();
+    final date =
+        '${now.year}-${_addLeadingZero(now.month)}-${_addLeadingZero(now.day)}';
+    final time =
+        '${_get12HourFormat(now.hour)}:${_addLeadingZero(now.minute)} ${_getAMPM(now.hour)}';
+
+    final body = jsonEncode({
+      "user": userID,
+      "date": date,
+      "time": time,
+      "imageUrl": url,
+      "description": description,
+      "damageScore": 1,
+      "coordinates": [location.latitude, location.longitude],
+      "location": address
+    });
+
+    final resp = await http.post(Uri.parse('$baseURL/post'),
+        headers: requestHeaders, body: body);
+
+    dialogController.hideDialog();
+
+    if (resp.statusCode == 200) {
+      Get.offAll(SplashPage());
+    } else {
+      dialogController.showErrorDialog(
+          'Error', 'Unable to upload this post: ${resp.body}');
+    }
+  }
+
+  String _addLeadingZero(int number) {
+    // Add a leading zero if the number is less than 10
+    return number.toString().padLeft(2, '0');
+  }
+
+  String _get12HourFormat(int hour) {
+    if (hour > 12) {
+      return '${hour - 12}';
+    } else if (hour == 0) {
+      return '12';
+    } else {
+      return '$hour';
+    }
+  }
+
+  String _getAMPM(int hour) {
+    return hour >= 12 ? 'PM' : 'AM';
   }
 }

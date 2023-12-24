@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(textTheme: GoogleFonts.lexendTextTheme()),
-        home: MyHomePage()
+        home: SplashPage()
         // routes: const {
         //  "/": SplashPage(),
         // },
