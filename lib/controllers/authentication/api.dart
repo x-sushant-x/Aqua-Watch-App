@@ -73,13 +73,14 @@ class AuthAPIController extends GetxController {
         final resp = LoginUserResponse.fromJson(body);
 
         final prefs = await SharedPreferences.getInstance();
+        await prefs.setString("id", resp.user.id);
         await prefs.setString("name", resp.user.name);
         await prefs.setString("email", resp.user.email);
         await prefs.setString("location", resp.user.location);
         await prefs.setString("language", resp.user.language);
         await prefs.setString("profilePicture", resp.user.profilePicture);
         await prefs.setString("phoneNumber", resp.user.phoneNumber);
-        print('Details Set For User ${resp.user.name}');
+        print('Details Set For User ${resp.user.id}');
       }
 
       if (response.statusCode != 200) {

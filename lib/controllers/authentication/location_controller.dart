@@ -38,19 +38,21 @@ class LocationController extends GetxController {
 
     return true;
   }
+
   getUserLocation() async {
     var serviceEnabled = await checkPermission();
-    if (serviceEnabled){
+    if (serviceEnabled) {
       Position location = await Geolocator.getCurrentPosition();
-      placemark = await placemarkFromCoordinates(location.latitude, location.longitude);
+      placemark =
+          await placemarkFromCoordinates(location.latitude, location.longitude);
 
       Placemark first = placemark.first;
 
       final fetchedData = [
         PiLoc(
           state: first.subAdministrativeArea.toString(),
-          locality:first.subAdministrativeArea.toString() ,
-          postalCode:first.postalCode.toString() ,
+          locality: first.subAdministrativeArea.toString(),
+          postalCode: first.postalCode.toString(),
           road: first.thoroughfare.toString(),
         )
       ];
@@ -58,20 +60,17 @@ class LocationController extends GetxController {
       placemarks.value = fetchedData;
       isLoading.value = false;
 
-
       print('State: ${placemarks.first.state}');
       print('Locality: ${first.toString()}');
       print('Postal Code: ${first.postalCode}');
       print('Road: ${first.thoroughfare}');
-
-    }
-    else{
+    } else {
       isLoading.value = false;
       final fetchedData = [
         PiLoc(
           state: "",
-          locality:"" ,
-          postalCode:"" ,
+          locality: "",
+          postalCode: "",
           road: "",
         )
       ];
@@ -80,5 +79,17 @@ class LocationController extends GetxController {
     }
   }
 
+  Future<String> getAddressFromLatLng(double latitude, double longitude) async {
+    try {
+      List<Placemark> placemarks =
+          await placemarkFromCoordinates(latitude, longitude);
+      Placemark place = placemarks.first;
 
+      String address =
+          "${place.name}, ${place.locality}";
+      return address;
+    } catch (e) {
+      return "Could not get address for the location";
+    }
+  }
 }

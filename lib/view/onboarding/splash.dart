@@ -45,11 +45,6 @@ Widget bottomSheetBuilder(BuildContext context) {
               children: [
                 CustomOutlinedButton(
                   deviceSize: deviceSize,
-                  title: "Municipal",
-                  onTap: () {},
-                ),
-                CustomOutlinedButton(
-                  deviceSize: deviceSize,
                   title: "NGOs",
                   onTap: () {
                     Get.to(sign_up_ngo());
