@@ -540,14 +540,17 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _showUploadModal(context);
-        },
-        backgroundColor: AppColors.black,
-        child: Icon(
-          Icons.add,
-          color: AppColors.white,
+      floatingActionButton: Padding(
+        padding: EdgeInsets.only(bottom: Get.height / 30),
+        child: FloatingActionButton(
+          onPressed: () {
+            _showUploadModal(context);
+          },
+          backgroundColor: AppColors.black,
+          child: Icon(
+            Icons.add,
+            color: AppColors.white,
+          ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
