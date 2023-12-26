@@ -83,6 +83,8 @@ flutter:
     - assets/NGO_Logo.png
     - assets/NGO login transparent.png
     - assets/NGO Auth transparent.png
+    - assets/dashboard_person.png
+    - assets/dashboard_ngo.png
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

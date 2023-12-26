@@ -1,3 +1,4 @@
+import 'package:aqua_watch_app/screens/ngo_dashboard_page.dart';
 import 'package:aqua_watch_app/view/onboarding/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:aqua_watch_app/screens/emergency.dart';
@@ -17,6 +18,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
 
   final List<Widget> _widgetOptions = <Widget>[
+    // If it is NGO, then use NGODashboardPage() at first position instead of HomePage()
     HomePage(),
     MapPage(),
     Emergency(),
@@ -32,6 +34,8 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
+    // If it is NGO then _selectedIndex != 0 && _selectedIndex != 1 is the correct condition
+    // as NGODashboard page doesnt have an appBar in design
     if (_selectedIndex != 1) {
       return Scaffold(
         appBar: AppBar(
