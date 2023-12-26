@@ -91,3 +91,83 @@ Future<User?> signInWithGoogle() async {
     print("Error signing in with Google: $error");
   }
 }
+
+Future<User?> signUpNGOWithGoogle(String name, location, phoneNumber, description) async {
+  try {
+    final GoogleSignInAccount? googleSignInAccount =
+        await googleSignIn.signIn();
+    if (googleSignInAccount != null) {
+      final GoogleSignInAuthentication googleSignInAuthentication =
+          await googleSignInAccount.authentication;
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleSignInAuthentication.accessToken,
+        idToken: googleSignInAuthentication.idToken,
+      );
+      final UserCredential authResult =
+          await _auth.signInWithCredential(credential);
+      final User? user = authResult.user;
+
+      if (user!.displayName == null ||
+          user.email == null ||
+          user.photoURL == null) {
+        dialogController.showErrorDialog('Google auth failed.');
+        return null;
+      }
+
+      bool userAuthenticated = await authAPIController.addNGOToDB(
+          name,
+          user.email,
+          location,
+          user.photoURL,
+          phoneNumber,
+          description);
+
+      userAuthenticated
+          ? Get.offAll(MyHomePage())
+          : dialogController.showErrorDialog('Google auth failed');
+
+      return user;
+    }
+  } catch (error) {
+    print("Error signing in with Google: $error");
+    return null;
+  }
+  return null;
+}
+
+Future<User?> signInNGOWithGoogle() async {
+  try {
+    final GoogleSignInAccount? googleSignInAccount =
+        await googleSignIn.signIn();
+    if (googleSignInAccount != null) {
+      final GoogleSignInAuthentication googleSignInAuthentication =
+          await googleSignInAccount.authentication;
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleSignInAuthentication.accessToken,
+        idToken: googleSignInAuthentication.idToken,
+      );
+      final UserCredential authResult =
+          await _auth.signInWithCredential(credential);
+      final User? user = authResult.user;
+
+      if (user!.displayName == null ||
+          user.email == null ||
+          user.photoURL == null) {
+        dialogController.showErrorDialog('Google auth failed.');
+        return null;
+      }
+
+      bool userAuthenticated =
+          await authAPIController.loginNGOFromDB(user.email ?? '');
+
+      userAuthenticated
+          ? Get.to(MyHomePage())
+          : dialogController.showErrorDialog('Google auth failed');
+
+      return user;
+    }
+  } catch (error) {
+    print("Error signing in with Google: $error");
+  }
+  return null;
+}
