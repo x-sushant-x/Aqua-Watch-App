@@ -17,7 +17,8 @@ import 'package:geolocator/geolocator.dart';
 class sign_up_ngo extends StatelessWidget {
   final LocationController locationController = Get.put(LocationController());
   final DropdownController dropdownController = Get.put(DropdownController());
-  final TextEditingController emailTextController = TextEditingController();
+  final TextEditingController nameTextController = TextEditingController();
+  
   final TextEditingController descriptionTextController =
       TextEditingController();
   final TextEditingController locationTextController = TextEditingController();
@@ -78,7 +79,7 @@ class sign_up_ngo extends StatelessWidget {
                               height: 10,
                             ),
                             TextFormField(
-                              controller: phoneTextController,
+                              controller: nameTextController,
                               decoration: InputDecoration(
                                 suffixIconConstraints:
                                     BoxConstraints(maxHeight: 50, minWidth: 50),
@@ -92,21 +93,7 @@ class sign_up_ngo extends StatelessWidget {
                             SizedBox(
                               height: 5,
                             ),
-                            TextFormField(
-                              controller: emailTextController,
-                              decoration: InputDecoration(
-                                suffixIconConstraints:
-                                    BoxConstraints(maxHeight: 50, minWidth: 50),
-                                border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10))),
-                                labelText: 'Email',
-                              ),
-                              style: GoogleFonts.lexend(),
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
+                            
                             TextFormField(
                               controller: phoneTextController,
                               decoration: InputDecoration(
@@ -195,7 +182,7 @@ class sign_up_ngo extends StatelessWidget {
                             ElevatedButton(
                               onPressed: () async {
                                 if (phoneTextController.text.isEmpty ||
-                                    locationTextController.text.isEmpty) {
+                                    locationTextController.text.isEmpty || nameTextController.text.isEmpty || descriptionTextController.text.isEmpty) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       duration: Duration(seconds: 2),
@@ -212,11 +199,12 @@ class sign_up_ngo extends StatelessWidget {
                                     ),
                                   );
                                 } else {
-                                  signUpWithGoogle(
+                                  signUpNGOWithGoogle(
+                                      nameTextController.text.toString(),
                                       locationTextController.text.toString(),
-                                      dropdownController.selectedValue
-                                          .toString(),
-                                      phoneTextController.text.toString());
+                                      phoneTextController.text.toString(),
+                                      descriptionTextController.text.toString()
+                                      );
                                 }
                               },
                               style: ElevatedButton.styleFrom(
@@ -235,12 +223,16 @@ class sign_up_ngo extends StatelessWidget {
                                   SizedBox(
                                       width: 8), // Adjust the spacing as needed
                                   Text(
-                                    "Continue",
+                                    "Sign Up With Google",
                                     style: GoogleFonts.lexend(
                                       textStyle: TextStyle(
                                           fontSize: 13, color: Colors.white),
                                     ),
-                                  )
+                                  ),
+                                  SizedBox(
+                                      width: 8),
+
+                                  Icon(Icons.g_mobiledata_sharp, color: Colors.white,)
                                 ],
                               ),
                             )

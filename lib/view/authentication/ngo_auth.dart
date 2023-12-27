@@ -4,6 +4,7 @@ import 'package:aqua_watch_app/view/authentication/ngo_register.dart';
 import 'package:aqua_watch_app/view/authentication/sign_up.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../controllers/authentication/google_auth.dart';
 
 class NGOAuth extends StatefulWidget {
   const NGOAuth({Key? key}) : super(key: key);
@@ -70,11 +71,7 @@ class _NGOAuthState extends State<NGOAuth> {
                         width: w * 0.33,
                         child: ElevatedButton(
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ngo_login()),
-                            );
+                            signInNGOWithGoogle();
                           },
                           style: ElevatedButton.styleFrom(
                             minimumSize: Size.fromHeight(h * 0.06),
