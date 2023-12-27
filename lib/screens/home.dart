@@ -9,6 +9,7 @@ import 'package:aqua_watch_app/utils/colors.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+
 class MyHomePage extends StatefulWidget {
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -16,15 +17,34 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
+  late List<Widget> _widgetOptions;
+  // Initially treat as a user
+  bool isNGO = false;
 
-  final List<Widget> _widgetOptions = <Widget>[
+  @override
+  void initState() {
+    super.initState();
+
+    _widgetOptions = <Widget>[
     // If it is NGO, then use NGODashboardPage() at first position instead of HomePage()
     HomePage(),
     MapPage(),
     Emergency(),
     Profile(),
   ];
+  checkNGO();
+  }
 
+  Future<void> checkNGO() async {
+    var prefs = await SharedPreferences.getInstance();
+    if (prefs.getString("description") != null) {
+    setState(() {
+      isNGO = true;
+      _widgetOptions[0] = NGODashboardPage();
+      _selectedIndex = 0;
+    });
+    }
+  }
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -36,7 +56,8 @@ class _MyHomePageState extends State<MyHomePage> {
     final Size screenSize = MediaQuery.of(context).size;
     // If it is NGO then _selectedIndex != 0 && _selectedIndex != 1 is the correct condition
     // as NGODashboard page doesnt have an appBar in design
-    if (_selectedIndex != 1) {
+    bool toShowAppBar = (isNGO && _selectedIndex != 0 && _selectedIndex != 1) || (isNGO == false && _selectedIndex != 1);
+    if (toShowAppBar) {
       return Scaffold(
         appBar: AppBar(
           toolbarHeight: screenSize.height / 13,

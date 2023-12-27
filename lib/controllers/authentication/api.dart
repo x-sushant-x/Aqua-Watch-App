@@ -38,7 +38,9 @@ class AuthAPIController extends GetxController {
         dialogController.showErrorDialog(response.body);
         return false;
       } else {
+        
         final prefs = await SharedPreferences.getInstance();
+        prefs.clear();
         await prefs.setString("name", name);
         await prefs.setString("email", email);
         await prefs.setString("location", location);
@@ -77,7 +79,9 @@ class AuthAPIController extends GetxController {
         dialogController.showErrorDialog(response.body);
         return false;
       } else {
+        
         final prefs = await SharedPreferences.getInstance();
+        prefs.clear();
         await prefs.setString("name", name);
         await prefs.setString("email", email);
         await prefs.setString("location", location);
@@ -112,6 +116,7 @@ class AuthAPIController extends GetxController {
         final resp = LoginUserResponse.fromJson(body);
 
         final prefs = await SharedPreferences.getInstance();
+        prefs.clear();
         await prefs.setString("id", resp.user.id);
         await prefs.setString("name", resp.user.name);
         await prefs.setString("email", resp.user.email);
@@ -139,9 +144,7 @@ class AuthAPIController extends GetxController {
       dialogController.showLoadingDialog();
       var response = await http.get(
         Uri.parse('$baseURL/ngo/login?email=$email'),
-        headers: requestHeaders,
       );
-
       print(response.body);
       dialogController.hideDialog();
 
@@ -151,6 +154,7 @@ class AuthAPIController extends GetxController {
         final resp = LoginUserResponse.fromJson(body);
 
         final prefs = await SharedPreferences.getInstance();
+        prefs.clear();
         await prefs.setString("name", resp.user.name);
         await prefs.setString("email", resp.user.email);
         await prefs.setString("location", resp.user.location);
