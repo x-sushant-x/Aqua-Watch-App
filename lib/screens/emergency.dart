@@ -11,7 +11,9 @@ class _EmergencyState extends State<Emergency> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Text("Hi"),
+      body: Center(
+        child: Text('This will be emergency screen.'),
+      ),
     );
   }
 }
