@@ -9,7 +9,7 @@ class ProfileController extends GetxController {
   getAndSetProfileData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     name.value = prefs.getString('name') ?? '';
-    profilePicture.value = prefs.getString('profilePicture')?? '';
+    profilePicture.value = prefs.getString('profilePicture')?? prefs.getString('image_url') ?? '';
     isDataSet.value = true;
   }
 }

@@ -155,7 +155,7 @@ Future<User?> signInNGOWithGoogle() async {
       }
 
       bool userAuthenticated =
-          await authAPIController.loginNGOFromDB(user.email ?? '');
+          await authAPIController.loginNGOFromDB(user.email!);
 
       userAuthenticated
           ? Get.offAll(MyHomePage())

@@ -106,8 +106,9 @@ class AuthAPIController extends GetxController {
         Uri.parse('$baseURL/login?email=$email'),
         headers: requestHeaders,
       );
-
+      for (int i=1; i<15; i++) {print("bleh");}
       print(response.body);
+      for (int i=1; i<15; i++) {print("bleh");}
       dialogController.hideDialog();
 
       final body = jsonDecode(response.body);
@@ -151,17 +152,17 @@ class AuthAPIController extends GetxController {
       final body = jsonDecode(response.body);
 
       if (response.statusCode == 200) {
-        final resp = LoginUserResponse.fromJson(body);
+        final resp = NGOLoginUserResponse.fromJson(body);
 
         final prefs = await SharedPreferences.getInstance();
         prefs.clear();
         await prefs.setString("name", resp.user.name);
         await prefs.setString("email", resp.user.email);
         await prefs.setString("location", resp.user.location);
-        await prefs.setString("description", resp.user.location);
-        await prefs.setString("image_url", resp.user.profilePicture);
-        await prefs.setString("phone_number", resp.user.phoneNumber);
-        print('Details Set For User ${resp.user.id}');
+        await prefs.setString("description", resp.user.description);
+        await prefs.setString("image_url", resp.user.image_url);
+        await prefs.setString("phone_number", resp.user.phone_number);
+        print('Details Set For User ${resp.user.name}');
       }
 
       if (response.statusCode != 200) {
