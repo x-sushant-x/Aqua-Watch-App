@@ -40,7 +40,7 @@ class _NGOAuthState extends State<NGOAuth> {
                   Wrap(
                     alignment: WrapAlignment.start,
                     children: [
-                      Container(
+                      SizedBox(
                         width: w * 0.85,
                         child: Text(
                           "Welcome NGO! Let's \nLogin",
